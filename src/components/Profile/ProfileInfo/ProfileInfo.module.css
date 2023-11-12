@@ -1,0 +1,16 @@
+.info {
+    padding-bottom: 20px;
+}
+
+.img img{
+    border-radius: 5px;
+    width: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+}
+
+.description {
+    background-color: rgba(28, 96, 243, 0.17);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+}

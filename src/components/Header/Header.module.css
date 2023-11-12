@@ -1,0 +1,21 @@
+.header {
+    margin: 0 auto;
+    width: 100%;
+    grid-area: h;
+    background-color: rgba(28, 96, 243, 0.17);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+}
+
+.header img {
+    padding: 6px;
+    width: 45px;
+    border-radius: 5px;
+}
+
+.header span {
+    color: azure;
+    position: absolute;
+    margin: 10px;
+    text-shadow: rgba(1, 255, 81, 0.76) 1px 0 10px;
+}

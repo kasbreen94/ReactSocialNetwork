@@ -1,0 +1,8 @@
+.posts {
+    padding: 10px;
+    border-radius: 5px;
+    grid-area: c;
+    background-color: rgba(28, 96, 243, 0.17);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+}
+
