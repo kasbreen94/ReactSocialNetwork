@@ -70,4 +70,45 @@
 
 .messages {
     grid-area: b;
+    position:relative;
+}
+
+.addMessage {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+    width: 250px;
+}
+
+.addMessage textarea {
+    color: azure;
+    border: none;
+    background-color: rgba(9, 37, 94, 0.34);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+    width: 250px;
+    height: 50px;
+}
+.addMessage button {
+    margin-top: 10px;
+    color: azure;
+    border: none;
+    float: right;
+    background-color: rgba(9, 37, 94, 0.34);
+    background-size: 130%;
+    border-radius: 3px;
+    padding: 5px 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+}
+
+.addMessage button:hover {
+    margin-top: 6px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
+    padding: 7px 7px;
+}
+
+.addMessage button:active {
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
+    padding: 5px 5px;
 }
