@@ -24,7 +24,7 @@ let initialState = {
             like: 3
         }
     ],
-    newPostText: 'Напишите текст...'
+    newPostText: ''
 };
 
 const profileReducer = (state = initialState, action) => {

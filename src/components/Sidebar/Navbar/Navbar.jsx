@@ -2,8 +2,6 @@ import React from "react";
 import NavbarStyle from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
 
-
-
 const Navbar = (props) => {
 
     const activeLink = ({isActive}) => isActive ? NavbarStyle.active : NavbarStyle.item

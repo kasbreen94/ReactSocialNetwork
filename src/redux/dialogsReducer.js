@@ -12,7 +12,7 @@ let initialState = {
         {id: 5, message: 'mauris a diam maecenas sed'},
         {id: 6, message: 'euismod quis viverra nibh cras'}
     ],
-    newMessageText: 'Напишите текст...',
+    newMessageText: '',
     dialogs: [
         {id: 1, name: 'Dmitriy', avatar: avatar},
         {id: 2, name: 'Andrey', avatar: avatar},

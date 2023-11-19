@@ -9,7 +9,7 @@ import Settings from "./components/Settings/Settings";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Friends from "./components/Friends/Friends";
-import {updateNewMessageText, updateNewPostText} from "./redux/store";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 
 const App = (props) => {
@@ -17,21 +17,23 @@ const App = (props) => {
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
-                <Sidebar sidebar={props.state.sidebar}/>
+                <Sidebar
+                    // sidebar={props.store.sidebar}
+                />
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path="/profile/*" element={<Profile
-                            profilePage={props.state.profilePage}
-                            dispatch={props.dispatch}
-                            />}/>
-                        <Route path="/dialogs/*" element={<Dialogs
-                            dialogsPage={props.state.dialogsPage}
-                            dispatch={props.dispatch}
+                        <Route path="/profile/*"
+                               element={<Profile
+                                   // store={props.store}
+                               />}/>
+                        <Route path="/dialogs/*"
+                               element={<DialogsContainer
+                                   // store={props.store}
                         />}/>
                         <Route path="/news/*" element={<News/>}/>
                         <Route path="/music/*" element={<Music/>}/>
                         <Route path="/settings/*" element={<Settings/>}/>
-                        <Route path="/friends/*" element={<Friends />}/>
+                        <Route path="/friends/*" element={<Friends/>}/>
                     </Routes>
                 </div>
             </div>
