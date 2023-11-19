@@ -10,6 +10,7 @@ const Post = (props) => {
                 alt='none'/>
             <div className={PostStyle.message}>
                 {props.message}
+                <span className={PostStyle.tagRemove}></span>
             </div>
             <div className={PostStyle.like}>
                 <img src={like} alt='2'/>

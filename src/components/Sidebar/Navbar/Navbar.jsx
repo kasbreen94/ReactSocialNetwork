@@ -2,9 +2,11 @@ import React from "react";
 import NavbarStyle from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
 
-const activeLink = ({isActive}) => isActive ? NavbarStyle.active : NavbarStyle.item
+
 
 const Navbar = (props) => {
+
+    const activeLink = ({isActive}) => isActive ? NavbarStyle.active : NavbarStyle.item
 
     let navbarElement =
         props.navbar.map(nav =>
