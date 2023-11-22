@@ -8,7 +8,7 @@ const Navbar = (props) => {
 
     let navbarElement =
         props.navbar.map(nav =>
-            <li className={NavbarStyle.item}>
+            <li className={NavbarStyle.item} key={nav.id}>
                 <img src={nav.icon} alt=""/>
                 <NavLink
                     to={"/" + nav.address}

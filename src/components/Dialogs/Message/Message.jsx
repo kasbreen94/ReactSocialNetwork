@@ -8,6 +8,7 @@ const Message = (props) => {
     return <div>
         <div className={dialogsStyle.message}>
             {props.message}
+
         </div>
     </div>
 }

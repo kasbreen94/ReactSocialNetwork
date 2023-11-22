@@ -10,7 +10,7 @@ const FriendsBar = (props) => {
     const friendsElement =
         props.friends.map (friend => <FriendsBarItem
             avatar={friend.avatar}
-            name={friend.name}/>)
+            name={friend.name} key={friend.id}/>)
 
     return (
         <nav className={friendsBarStyle.friends}>

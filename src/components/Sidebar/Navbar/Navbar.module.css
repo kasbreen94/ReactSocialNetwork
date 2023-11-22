@@ -1,7 +1,7 @@
 .nav {
     background-color: rgba(28, 96, 243, 0.17);
     border-radius: 5px;
-    height: 230px;
+    height: 260px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
     overflow: auto;
 }

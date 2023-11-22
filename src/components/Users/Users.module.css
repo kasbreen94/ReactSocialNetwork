@@ -1,0 +1,33 @@
+.userItem {
+    display: grid;
+    grid-template-areas:
+    "f i";
+    grid-template-columns: 130px auto;
+
+    background-color: rgba(1, 255, 81, 0.18);
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
+    margin: 10px auto;
+    padding: 20px;
+    width: 600px;
+}
+
+.userItem:hover {
+    box-shadow: 0 0 15px rgba(1, 255, 81, 0.18);
+    width: 620px;
+
+}
+
+.userPhoto {
+    background-color: azure;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.follow {
+    grid-area: f;
+}
+
+.info {
+    grid-area: i;
+}

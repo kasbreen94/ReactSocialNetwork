@@ -1,9 +1,5 @@
-import React from "react";
-
 import {connect} from "react-redux";
 import FriendsBar from "./FriendsBar";
-import friendsBarStyle from "./FriendsBar.module.css";
-
 
 let mapStateToProps = (state) => {
     return {
