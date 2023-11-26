@@ -1,35 +1,53 @@
 import React from "react";
-import usersStyle from './Users.module.css'
+import usersStyle from "./Users.module.css";
 import avatar from "../../redux/avatar.svg";
-import axios from "axios";
+import {NavLink} from "react-router-dom";
 
-class Users extends React.Component {
+let Users = (props) => {
 
-    componentDidMount() {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users")
-            .then(response => {
-                this.props.setUsers(response.data.items)
-            });
+    let pagesCount = Math.ceil (props.totalUsersCount / props.pageSize);
+
+    let pages = [];
+    for (let i=1; i <= pagesCount; i++) {
+        pages.push(i);
     }
 
-    render() {
-        return (
-            <div>{this.props.users.map(u =>
+    let slicedPages;
+    let curPage = props.currentPage;
+    if (curPage - 3 < 0) {
+        slicedPages = pages.slice(0, 5);
+    } else {
+        slicedPages = pages.slice(curPage - 3, curPage + 2);
+    }
+
+    return (
+        <div>
+            <div className={usersStyle.numberPage}>
+                { slicedPages.map( p => {
+                    return <span className={props.currentPage === p ? usersStyle.selectedPage: ""}
+                                 onClick={() => {props.onPageChanged(p)}}>{p}</span>
+                })}
+
+            </div>
+            {props.users.map(u =>
                 <div className={usersStyle.userItem} key={u.id}>
                     <span className={usersStyle.follow}>
                         <div>
+                            <NavLink to={'/profile/' + u.id}>
                             <img src={u.photos.small != null ? u.photos.small : avatar}
                                  alt=''
                                  className={usersStyle.userPhoto}/>
+                                </NavLink>
                         </div>
-                        <div>
+                        <div >
                             {u.followed
-                                ? <button
+                                ? <button className={usersStyle.followed}
                                     onClick={() => {
-                                        this.props.unfollow(u.id)
+                                        props.unfollow(u.id)
                                     }}>Unfollow</button>
-                                : <button onClick={() => {
-                                    this.props.follow(u.id)
+                                : <button className={ `${usersStyle.followed} ${usersStyle.followed_follow}`}
+                                    onClick={() => {
+                                    props.follow(u.id)
                                 }}>Follow</button>}
                         </div>
                     </span>
@@ -53,9 +71,8 @@ class Users extends React.Component {
                     </span>
                 </div>)
             }
-            </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Users;

@@ -1,3 +1,16 @@
+.selectedPage {
+    font-weight: bold;
+    word-wrap: normal;
+    display: inline-block;
+    text-align: center;
+    margin: 5px;
+}
+
+.numberPage {
+    cursor:pointer;
+    text-align: center;
+}
+
 .userItem {
     display: grid;
     grid-template-areas:
@@ -10,17 +23,18 @@
     margin: 10px auto;
     padding: 20px;
     width: 600px;
+    height: 85px;
 }
 
 .userItem:hover {
     box-shadow: 0 0 15px rgba(1, 255, 81, 0.18);
-    width: 620px;
+    width: 605px;
 
 }
 
 .userPhoto {
     background-color: azure;
-    width: 70px;
+    width: 60px;
     border-radius: 5px;
 }
 
@@ -28,6 +42,32 @@
     grid-area: f;
 }
 
+.followed {
+    margin-top: 5px;
+    cursor: pointer;
+    color: azure;
+    border: none;
+    background-color: rgba(1, 255, 81, 0.18);
+    border-radius: 3px;
+    padding: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+}
+
+.followed_follow {
+    background-color: rgba(28, 96, 243, 0.17);
+    margin-left: 5px;
+}
+
+.followed:hover {
+    background-color: rgba(1, 255, 81, 0.18);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
+
+}
+
 .info {
     grid-area: i;
+}
+
+.preloader {
+
 }

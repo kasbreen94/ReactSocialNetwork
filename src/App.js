@@ -1,7 +1,6 @@
 import React from "react";
 import './App.css';
 import Header from "./components/Header/Header";
-import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -10,6 +9,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Friends from "./components/Friends/Friends";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 
 const App = (props) => {
@@ -21,8 +21,8 @@ const App = (props) => {
                 />
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path="/profile/*"
-                               element={<Profile
+                        <Route path="/profile/:userId?*"
+                               element={<ProfileContainer
                                />}/>
                         <Route path="/dialogs/*"
                                element={<DialogsContainer
