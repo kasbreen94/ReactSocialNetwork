@@ -2,6 +2,8 @@ import React from "react";
 import usersStyle from "./Users.module.css";
 import avatar from "../../redux/avatar.svg";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
+import {deleteUserFollow, deleteUserUnfollow, postUserFollow, usersAPI} from "../../api/api";
 
 let Users = (props) => {
 
@@ -41,13 +43,26 @@ let Users = (props) => {
                         </div>
                         <div >
                             {u.followed
-                                ? <button className={usersStyle.followed}
-                                    onClick={() => {
-                                        props.unfollow(u.id)
-                                    }}>Unfollow</button>
-                                : <button className={ `${usersStyle.followed} ${usersStyle.followed_follow}`}
-                                    onClick={() => {
-                                    props.follow(u.id)
+                                ? <button disabled={props.followingInProgress.some(id => id === u.id)} className={usersStyle.followed} onClick={() => {
+                                    props.toggleFollowingProgress(true, u.id);
+                                    usersAPI.deleteUserUnfollow(u.id)
+                                        .then(data => {
+                                            if (data.resultCode === 0) {
+                                                props.unfollow(u.id);
+                                            }
+                                            props.toggleFollowingProgress(false, u.id);
+                                        });
+
+                                }}>Unfollow</button>
+                                : <button disabled={props.followingInProgress.some(id => id === u.id)} className={ `${usersStyle.followed} ${usersStyle.followed_follow}`} onClick={() => {
+                                    props.toggleFollowingProgress(true, u.id);
+                                    usersAPI.postUserFollow(u.id)
+                                        .then(data => {
+                                            if (data.resultCode === 0) {
+                                                props.follow(u.id);
+                                            }
+                                            props.toggleFollowingProgress(false, u.id);
+                                        });
                                 }}>Follow</button>}
                         </div>
                     </span>
@@ -58,14 +73,6 @@ let Users = (props) => {
                             </div>
                             <div>
                                 {u.status}
-                            </div>
-                        </span>
-                        <span>
-                            <div>
-                                {"u.location.country"}
-                            </div>
-                            <div>
-                                {"u.location.city"}
                             </div>
                         </span>
                     </span>

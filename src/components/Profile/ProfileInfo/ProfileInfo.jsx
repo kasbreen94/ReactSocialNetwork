@@ -1,6 +1,7 @@
 import React from "react";
 import ProfileInfoStyle from './ProfileInfo.module.css'
 import Preloader from "../../common/preloader/preloader";
+import avatar from "../../../redux/avatar.svg";
 
 const ProfileInfo = (props) => {
 
@@ -19,7 +20,7 @@ const ProfileInfo = (props) => {
                 <div className={ProfileInfoStyle.Photo}>
                     <span>My Profile</span>
                     <div>
-                        <img src={props.profile.photos.large} alt='fdvgdfb'/>
+                        <img src={props.profile.photos.large != null ? props.profile.photos.large : avatar} alt=''/>
                     </div>
                 </div>
                 <div className={ProfileInfoStyle.descriptionInfo}>

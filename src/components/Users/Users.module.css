@@ -33,7 +33,6 @@
 }
 
 .userPhoto {
-    background-color: azure;
     width: 60px;
     border-radius: 5px;
 }
@@ -47,15 +46,26 @@
     cursor: pointer;
     color: azure;
     border: none;
-    background-color: rgba(1, 255, 81, 0.18);
+    background-color: rgba(28, 96, 243, 0.17);
+
     border-radius: 3px;
     padding: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
 }
 
 .followed_follow {
-    background-color: rgba(28, 96, 243, 0.17);
+    background-color: rgba(1, 255, 81, 0.18);
     margin-left: 5px;
+}
+
+.followed:disabled {
+    box-shadow: none;
+    background-color: rgba(77, 74, 74, 0.82);
+}
+.followed:disabled:hover {
+    box-shadow: none;
+    cursor: default;
+    background-color: rgba(77, 74, 74, 0.82);
 }
 
 .followed:hover {
