@@ -1,16 +1,13 @@
 import React from "react";
 import sidebarStyle from './Sidebar.module.css'
-import NavbarContainer from "./Navbar/NavbarConteiner";
-import FriendsBarContainer from "./FriendsBar/FriendsBarContainer";
+import FriendsBar from "./FriendsBar/FriendsBar";
+import Navbar from "./Navbar/Navbar";
+
 
 const Sidebar = (props) => {
     return <div className={sidebarStyle.sidebar}>
-        <NavbarContainer
-            // navbar={props.sidebar.navbar}
-        />
-        <FriendsBarContainer
-            // friends={props.sidebar.friends}
-        />
+        <Navbar navbar={props.navbar}/>
+        <FriendsBar friends={props.friends}/>
     </div>
 }
 

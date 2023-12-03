@@ -11,6 +11,7 @@
 .profileInfo {
     display: grid;
     grid-template-areas:
+    'e e'
     'a b'
     'c d';
     grid-template-columns: 200px 3fr
@@ -84,4 +85,34 @@
 .aboutMe span {
     margin-right: 10px;
     font-weight: bold;
+}
+
+.status {
+    grid-area: e;
+    margin-bottom: 15px;
+}
+
+.status span {
+    margin-right: 10px;
+}
+
+.statusEdit {
+    display: inline-block;
+    cursor: pointer;
+    background-color: rgba(1, 255, 81, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+    padding: 5px;
+    width: 585px;
+}
+
+.statusInput {
+    border: none;
+    outline: none;
+    color: azure;
+    background-color: rgba(1, 255, 81, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+    padding: 5px;
+    width: 585px;
 }

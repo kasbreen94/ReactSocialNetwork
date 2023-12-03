@@ -9,11 +9,8 @@ const instanse = axios.create ({
 });
 
 export const usersAPI = {
-    getUserProfile(userId) {
-        return instanse.get(`profile/${userId}`)
-    .then(response => {
-            return response.data;
-        });
+    getProfile(userId) {
+        return profileAPI.getProfile(userId);
     },
     getUsers(currentPage, pageSize) {
         return instanse.get(`users?page=${currentPage}&count=${pageSize}`, {
@@ -21,18 +18,42 @@ export const usersAPI = {
             return response.data;
         })
     },
-    deleteUserUnfollow(id) {
-        return instanse.delete(`follow/${id}`, {
+    deleteUserUnfollow(userId) {
+        return instanse.delete(`follow/${userId}`, {
         }).then(response => {
             return response.data;
         });
     },
-    postUserFollow(id) {
-        return instanse.post(`follow/${id}`, {}, {
+    postUserFollow(userId) {
+        return instanse.post(`follow/${userId}`, {}, {
         }).then(response => {
             return response.data;
         });
     },
+}
+
+export const profileAPI = {
+    getProfile(userId) {
+        return instanse.get(`profile/${userId}`)
+            .then(response => {
+                return response.data;
+            });
+    },
+    getStatus(userId) {
+        return instanse.get(`profile/status/${userId}`)
+            .then(response => {
+                return response.data;
+            });
+    },
+    updateStatus(status) {
+        return instanse.put(`profile/status`, {status: status})
+            .then(response => {
+                return response.data;
+            });
+    }
+}
+
+export const authAPI = {
     getUserAuth() {
         return instanse.get(`auth/me`, {}, {
         }).then(response => {

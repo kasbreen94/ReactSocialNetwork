@@ -4,11 +4,17 @@ import {NavLink} from "react-router-dom";
 
 const DialogItem = (props) => {
 
-    const activeLink = ({isActive}) => isActive ? dialogsStyle.active : dialogsStyle.dialog
-
-    return <div className={dialogsStyle.dialog}>
-        <img src={props.avatar} alt=""/>
-        <NavLink to={"/dialogs/" + props.id} className={activeLink}>{props.name}</NavLink>
-    </div>
+    return (
+        <div>
+        <div className={dialogsStyle.dialogsItems}>
+            {props.dialogs.map(d =>
+                <div className={dialogsStyle.dialog}>
+                    <img src={d.avatar} alt=""/>
+                    <NavLink to={"/dialogs/" + d.id}
+                             className={({isActive}) => isActive ? dialogsStyle.active : dialogsStyle.dialog}>{d.name}</NavLink>
+                </div>)}
+        </div>
+        </div>
+    )
 }
 export default DialogItem;

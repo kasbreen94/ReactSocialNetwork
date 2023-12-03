@@ -2,15 +2,13 @@ import React from "react";
 import usersStyle from "./Users.module.css";
 import avatar from "../../redux/avatar.svg";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
-import {deleteUserFollow, deleteUserUnfollow, postUserFollow, usersAPI} from "../../api/api";
 
 let Users = (props) => {
 
-    let pagesCount = Math.ceil (props.totalUsersCount / props.pageSize);
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
     let pages = [];
-    for (let i=1; i <= pagesCount; i++) {
+    for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
 
@@ -25,11 +23,12 @@ let Users = (props) => {
     return (
         <div>
             <div className={usersStyle.numberPage}>
-                { slicedPages.map( p => {
-                    return <span className={props.currentPage === p ? usersStyle.selectedPage: ""}
-                                 onClick={() => {props.onPageChanged(p)}}>{p}</span>
+                {slicedPages.map(p => {
+                    return <span className={props.currentPage === p ? usersStyle.selectedPage : ""}
+                                 onClick={() => {
+                                     props.onPageChanged(p)
+                                 }}>{p}</span>
                 })}
-
             </div>
             {props.users.map(u =>
                 <div className={usersStyle.userItem} key={u.id}>
@@ -41,42 +40,34 @@ let Users = (props) => {
                                  className={usersStyle.userPhoto}/>
                                 </NavLink>
                         </div>
-                        <div >
+                        <div>
                             {u.followed
-                                ? <button disabled={props.followingInProgress.some(id => id === u.id)} className={usersStyle.followed} onClick={() => {
-                                    props.toggleFollowingProgress(true, u.id);
-                                    usersAPI.deleteUserUnfollow(u.id)
-                                        .then(data => {
-                                            if (data.resultCode === 0) {
-                                                props.unfollow(u.id);
-                                            }
-                                            props.toggleFollowingProgress(false, u.id);
-                                        });
-
-                                }}>Unfollow</button>
-                                : <button disabled={props.followingInProgress.some(id => id === u.id)} className={ `${usersStyle.followed} ${usersStyle.followed_follow}`} onClick={() => {
-                                    props.toggleFollowingProgress(true, u.id);
-                                    usersAPI.postUserFollow(u.id)
-                                        .then(data => {
-                                            if (data.resultCode === 0) {
-                                                props.follow(u.id);
-                                            }
-                                            props.toggleFollowingProgress(false, u.id);
-                                        });
-                                }}>Follow</button>}
+                                ? <button disabled={props.followingInProgress.some(id => id === u.id)}
+                                          className={usersStyle.followed}
+                                          onClick={() => {
+                                              props.unfollow(u.id)
+                                          }}>
+                                    Unfollow
+                                </button>
+                                : <button disabled={props.followingInProgress.some(id => id === u.id)}
+                                          className={`${usersStyle.followed} ${usersStyle.followed_follow}`}
+                                          onClick={() => {
+                                              props.follow(u.id)
+                                          }}>
+                                    Follow
+                                </button>}
                         </div>
                     </span>
                     <span className={usersStyle.info}>
-                        <span>
                             <div>
                                 {u.name}
                             </div>
                             <div>
                                 {u.status}
                             </div>
-                        </span>
                     </span>
-                </div>)
+                </div>
+            )
             }
         </div>
     )
