@@ -1,9 +1,13 @@
 import React from 'react';
 import dialogsStyle from './../Dialogs.module.css'
+import AddMessageForm from "./AddMessageForm";
 
 
 const Message = (props) => {
 
+    let addNewMessage = (values) => {
+        props.addMessage(values.newMessage)
+    }
 
     return <div className={dialogsStyle.messages}>
         <div className={dialogsStyle.message}>
@@ -12,17 +16,9 @@ const Message = (props) => {
             )}
         </div>
         <div className={dialogsStyle.addMessage}>
-            <div>
-                <textarea
-                    placeholder='Enter your message'
-                    onChange={props.updateNewMessageText}
-                    value={props.newMessageText}
-                />
-            </div>
-            <div>
-                <button onClick={props.addMessage}>Send</button>
-            </div>
+            <AddMessageForm onSubmit={addNewMessage}/>
         </div>
     </div>
 }
+
 export default Message;

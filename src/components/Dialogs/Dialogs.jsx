@@ -9,8 +9,6 @@ const Dialogs = (props) => {
         <div className={dialogsStyle.dialogs}>
             <DialogItem dialogs={props.dialogsPage.dialogs}/>
             <Message message={props.dialogsPage.messages}
-                     newMessageText={props.dialogsPage.newMessageText}
-                     updateNewMessageText={props.updateNewMessageText}
                      addMessage={props.addMessage}/>
         </div>
     )

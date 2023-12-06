@@ -8,9 +8,8 @@ class dialogsContainer extends React.Component {
         return (
             <Dialogs
                 dialogsPage={this.props.dialogsPage}
-                updateNewMessageText={this.props.updateNewMessageText}
                 addMessage={this.props.addMessage}
-                isAuth={this.props.isAuth}
+                // isAuth={this.props.isAuth}
             />
         )
     }
@@ -23,6 +22,6 @@ let mapStateToProps = (state) => {
 }
 
 const DialogsContainer =
-    connect(mapStateToProps, {updateNewMessageText, addMessage})(dialogsContainer);
+    connect(mapStateToProps, {addMessage})(dialogsContainer);
 
 export default DialogsContainer;

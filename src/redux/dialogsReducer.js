@@ -12,7 +12,6 @@ let initialState = {
         {id: 5, message: 'mauris a diam maecenas sed'},
         {id: 6, message: 'euismod quis viverra nibh cras'}
     ],
-    newMessageText: '',
     dialogs: [
         {id: 1, name: 'Dmitriy', avatar: avatar},
         {id: 2, name: 'Andrey', avatar: avatar},
@@ -27,29 +26,16 @@ const dialogsReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case ADD_MESSAGE: {
-            let newMessage = {
-                id: 7,
-                message: state.newMessageText,
-            };
             return  {
                 ...state,
-                newMessageText: '',
-                messages: [...state.messages, newMessage]
+                messages: [...state.messages, {id: 7, message: action.newMessage}]
             };
         }
-        case UPDATE_NEW_MESSAGE_TEXT:
-            return  {
-                ...state,
-                newMessageText: action.newText
-            };
-
         default:
             return state;
     }
 }
 
-export const addMessage = () => ({type: ADD_MESSAGE})
-export const updateNewMessageText = (e) =>
-    ({type: UPDATE_NEW_MESSAGE_TEXT, newText: e.target.value})
+export const addMessage = (newMessage) => ({type: ADD_MESSAGE, newMessage})
 
 export default dialogsReducer;
