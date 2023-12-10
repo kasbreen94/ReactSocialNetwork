@@ -1,4 +1,4 @@
-import avatar from "./avatar.svg";
+import avatar from "../assets/images/avatar.svg";
 
 let initialState = {
     navbar: [

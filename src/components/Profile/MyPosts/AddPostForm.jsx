@@ -3,13 +3,14 @@ import {Field, reduxForm} from "redux-form";
 import {maxLength, required} from "../../../utils/validators/validators";
 import {Textarea} from "../../common/FormsControls/FormsControls";
 
-const AddMessageForm = (props) => {
+
+const AddPostForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field component={Textarea}
-                       name="newMessage"
-                       placeholder="Enter your message"
+                       name="newPostText"
+                       placeholder="Enter your text"
                        validate={[required, maxLength(10)]}
                 />
             </div>
@@ -20,6 +21,6 @@ const AddMessageForm = (props) => {
     )
 }
 
-export default reduxForm ({
-    form: 'dialogAddMessageForm'
-}) (AddMessageForm)
+export default reduxForm({
+    form: 'addPostForm'
+})(AddPostForm)

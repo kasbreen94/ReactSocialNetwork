@@ -13,7 +13,7 @@ const FriendsBar = (props) => {
             </div>
             <div className={friendsBarStyle.line}></div>
             {props.friends.map(friend =>
-                <div className={friendsBarStyle.friend}>
+                <div className={friendsBarStyle.friend} key={friend.id}>
                     <img src={friend.avatar} alt=""/>
                     <span>{friend.name}</span>
                 </div>

@@ -1,4 +1,4 @@
-import avatar from './avatar.svg'
+import avatar from '../assets/images/avatar.svg'
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
 import sidebarReducer from "./sidebarReducer";

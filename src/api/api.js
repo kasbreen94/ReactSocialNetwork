@@ -32,12 +32,11 @@ export const usersAPI = {
 
 export const profileAPI = {
     getProfile(userId) {
-        return instanse.get(`profile/${userId}`)
+        return instanse.get(`profile/` + userId)
             .then(data);
     },
     getStatus(userId) {
-        return instanse.get(`profile/status/${userId}`)
-            .then(data);
+        return instanse.get(`profile/status/` + userId)
     },
     updateStatus(status) {
         return instanse.put(`profile/status`, {status: status})

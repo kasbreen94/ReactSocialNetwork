@@ -1,6 +1,6 @@
 import React from "react";
 import usersStyle from "./Users.module.css";
-import avatar from "../../redux/avatar.svg";
+import avatar from "../../assets/images/avatar.svg";
 import {NavLink} from "react-router-dom";
 
 let Users = (props) => {

@@ -1,17 +1,10 @@
 import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getStatus, getUserProfile, updateStatus} from "../../redux/profileReducer";
-import {useParams} from 'react-router-dom';
+import {addPost, getStatus, getUserProfile, updateStatus} from "../../redux/profileReducer";
 import {compose} from "redux";
-
-export function withRouter(Children) {
-    return (props) => {
-
-        const match = {params: useParams()};
-        return <Children {...props} match={match}/>
-    }
-}
+import {withRouter} from "../../hoc/withRouter";
+console.log("RENDER")
 
 class ProfileContainer extends React.Component {
 
@@ -27,26 +20,28 @@ class ProfileContainer extends React.Component {
     componentDidUpdate(prevProps) {
         let userId = this.props.match.params.userId
         if (prevProps.match.params.userId !== userId) {
-            this.props.getUserProfile(this.props.authUserId)
+            this.props.getUserProfile(this.props.authUserId);
+            this.props.getStatus(this.props.authUserId);
         }
         if(prevProps.status !==  this.props.status) {
             this.setState({
                 status: this.props.status
             })
         }
-
     }
 
     render() {
         return (
             <Profile {...this.props} profile={this.props.profile}
                      status={this.props.status} updateStatus={this.props.updateStatus}
+                     addPost={this.props.addPost} posts={this.props.posts}
             />
         )
     }
 }
 
 let mapStateToProps = (state) => ({
+    posts: state.profilePage.posts,
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authUserId: state.auth.id,
@@ -54,6 +49,6 @@ let mapStateToProps = (state) => ({
 });
 
 export default compose(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
-    withRouter
+    withRouter,
+    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, addPost})
 ) (ProfileContainer);

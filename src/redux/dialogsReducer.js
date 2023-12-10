@@ -1,7 +1,6 @@
-import avatar from "./avatar.svg";
+import avatar from "../assets/images/avatar.svg";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
 let initialState = {
     messages: [
