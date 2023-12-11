@@ -13,7 +13,7 @@ const Post = (props) => {
                     alt='none'/>
                 <div className={PostStyle.message}>
                     {posts.message}
-                    <span className={PostStyle.tagRemove}></span>
+                    <span onClick={props.deletePost} className={PostStyle.tagRemove}></span>
                 </div>
                 <div className={PostStyle.like}>
                     <img src={like} alt='2'/>

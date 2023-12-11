@@ -1,7 +1,7 @@
 import React from "react";
 import MyPostsStyle from './MyPosts.module.css'
 import Post from "./Post/Post";
-import AddPostForm from "./AddPostForm";
+import {AddPostForm} from "./AddPostFormHook";
 
 const MyPosts = React.memo(props => {
 
@@ -20,7 +20,7 @@ const MyPosts = React.memo(props => {
             </div>
         </div>
         <div>
-            <Post posts={props.posts}/>
+            <Post posts={props.posts} deletePost={props.deletePost}/>
         </div>
     </div>
 )

@@ -21,6 +21,6 @@ const AddPostForm = (props) => {
     )
 }
 
-export default reduxForm({
+export const PostForm = reduxForm({
     form: 'addPostForm'
 })(AddPostForm)

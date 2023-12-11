@@ -18,7 +18,6 @@
 }
 
 .loginForm input {
-    outline: none;
     border: none;
     margin-bottom: 10px;
     color: azure;
@@ -29,12 +28,6 @@
     text-align: center;
 }
 
-.checkbox::before {
-    margin-left: -150px;
-
-}
-
-
 .login {
     color: azure;
     border: none;
@@ -43,4 +36,15 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
     border-radius: 3px;
     margin-left: -120px;
+}
+
+.login:disabled {
+    color: rgba(240, 255, 255, 0.1);
+    background-color: rgba(2, 2, 2, 0.25);
+}
+
+.error {
+    margin-top: -5px;
+    color: red;
+    font-size: 13px;
 }

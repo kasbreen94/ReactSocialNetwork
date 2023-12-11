@@ -103,7 +103,21 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
 }
 
+.addMessage button:disabled {
+    color: rgba(240, 255, 255, 0.1);
+    background-color: rgba(2, 2, 2, 0.25);
+}
+
+.addMessage button:disabled:hover {
+    color: rgba(240, 255, 255, 0.1);
+    background-color: rgba(2, 2, 2, 0.25);
+    margin-top: 10px;
+    padding: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+}
+
 .addMessage button:hover {
+    background-color: rgba(1, 255, 81, 0.25);
     margin-top: 6px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
     padding: 7px 7px;

@@ -1,6 +1,6 @@
 import avatar from "../assets/images/avatar.svg";
 
-const ADD_MESSAGE = 'ADD-MESSAGE';
+const ADD_MESSAGE = 'dialogs/ADD_MESSAGE';
 
 let initialState = {
     messages: [

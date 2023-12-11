@@ -30,7 +30,6 @@ class App extends React.Component {
         }
 
         return (
-            <BrowserRouter>
                 <div className='app-wrapper'>
                     <HeaderContainer/>
                     <SidebarContainer
@@ -50,7 +49,6 @@ class App extends React.Component {
                         </Routes>
                     </div>
                 </div>
-            </BrowserRouter>
         );
     }
 }

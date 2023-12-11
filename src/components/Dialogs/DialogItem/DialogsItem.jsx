@@ -8,7 +8,7 @@ const DialogItem = (props) => {
         <div>
         <div className={dialogsStyle.dialogsItems}>
             {props.dialogs.map(d =>
-                <div className={dialogsStyle.dialog}>
+                <div className={dialogsStyle.dialog} key={d.id}>
                     <img src={d.avatar} alt=""/>
                     <NavLink to={"/dialogs/" + d.id}
                              className={({isActive}) => isActive ? dialogsStyle.active : dialogsStyle.dialog}>{d.name}</NavLink>

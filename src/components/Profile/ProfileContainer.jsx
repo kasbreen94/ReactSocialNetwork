@@ -1,10 +1,9 @@
 import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {addPost, getStatus, getUserProfile, updateStatus} from "../../redux/profileReducer";
+import {addPost, deletePost, getStatus, getUserProfile, updateStatus} from "../../redux/profileReducer";
 import {compose} from "redux";
 import {withRouter} from "../../hoc/withRouter";
-console.log("RENDER")
 
 class ProfileContainer extends React.Component {
 
@@ -13,8 +12,14 @@ class ProfileContainer extends React.Component {
         if (!userId) {
             userId = this.props.authUserId;
         }
-        this.props.getUserProfile(userId);
-        this.props.getStatus(userId);
+        if (!userId) {
+            console.error("ID should exists in URI params or in state ('authorizedUserId')");
+        } else {
+            this.props.getUserProfile(userId)
+            this.props.getStatus(userId)
+        }
+        // this.props.getUserProfile(userId);
+        // this.props.getStatus(userId);
     }
 
     componentDidUpdate(prevProps) {
@@ -34,7 +39,7 @@ class ProfileContainer extends React.Component {
         return (
             <Profile {...this.props} profile={this.props.profile}
                      status={this.props.status} updateStatus={this.props.updateStatus}
-                     addPost={this.props.addPost} posts={this.props.posts}
+                     addPost={this.props.addPost} deletePost={this.props.deletePost} posts={this.props.posts}
             />
         )
     }
@@ -50,5 +55,5 @@ let mapStateToProps = (state) => ({
 
 export default compose(
     withRouter,
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, addPost})
+    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, addPost, deletePost})
 ) (ProfileContainer);

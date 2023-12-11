@@ -1,6 +1,6 @@
 import React from 'react';
 import dialogsStyle from './../Dialogs.module.css'
-import AddMessageForm from "./AddMessageForm";
+import {AddMessageForm} from "./AddMessageFormHook";
 
 
 const Message = (props) => {
@@ -12,7 +12,7 @@ const Message = (props) => {
     return <div className={dialogsStyle.messages}>
         <div className={dialogsStyle.message}>
             {props.message.map(m =>
-                <div>{m.message}</div>
+                <div key={m.id}>{m.message}</div>
             )}
         </div>
         <div className={dialogsStyle.addMessage}>
@@ -20,5 +20,7 @@ const Message = (props) => {
         </div>
     </div>
 }
+
+
 
 export default Message;
