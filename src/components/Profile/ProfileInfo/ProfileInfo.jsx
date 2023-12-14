@@ -12,12 +12,6 @@ const ProfileInfo = (props) => {
 
     return (
         <div className={ProfileInfoStyle.info}>
-            {/*<div className={ProfileInfoStyle.profileLogo}>*/}
-            {/*    <img*/}
-            {/*        src='https://s3.ap-southeast-1.amazonaws.com/media.fictionlog/users/5abb9f1e9da86f6ccf102957/16643490e099111.jpg'*/}
-            {/*        alt='123'/>*/}
-            {/*</div>*/}
-
             <div className={ProfileInfoStyle.profileInfo}>
                 <ProfileStatusHooks status={props.status} updateStatus={props.updateStatus}/>
                 <div className={ProfileInfoStyle.Photo}>

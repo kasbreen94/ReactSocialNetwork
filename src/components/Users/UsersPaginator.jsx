@@ -1,7 +1,8 @@
 import usersStyle from "./Users.module.css";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {setStatus} from "../../redux/profileReducer";
 
-const UsersPaginator = (props) => {
+const UsersPaginator = (props, {portionSize = 10}) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
@@ -10,22 +11,27 @@ const UsersPaginator = (props) => {
         pages.push(i);
     }
 
-    let slicedPages;
-    let curPage = props.currentPage;
-    if (curPage - 3 < 0) {
-        slicedPages = pages.slice(0, 5);
-    } else {
-        slicedPages = pages.slice(curPage - 3, curPage + 2);
-    }
+    let portionCount = Math.ceil(pagesCount / portionSize);
+    let [portionNumber, setPortionNumber] = useState(Math.ceil(props.currentPage / portionSize));
+    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
+    let rightPortionPageNumber = portionNumber * portionSize;
 
     return (
-        <div className={usersStyle.numberPage}>
-            {slicedPages.map(p => {
-                return <span className={props.currentPage === p ? usersStyle.selectedPage : ""}
-                             onClick={() => {
-                                 props.onPageChanged(p)
-                             }} key={p.id}>{p}</span>
-            })}
+        <div>
+            {portionNumber > 1 &&
+            <button onClick={() => {setPortionNumber(portionNumber - 1)}}>PREV</button>}
+
+
+                {pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber).map(p => {
+                    return <span className={props.currentPage === p ? usersStyle.selectedPage : ""}
+                                 onClick={() => {
+                                     props.onPageChanged(p)
+                                 }} key={p.id}>{p}</span>
+                })}
+
+
+            {portionCount > portionNumber &&
+                <button onClick={() => {setPortionNumber(portionNumber + 1)}}>NEXT</button>}
         </div>
     )
 }

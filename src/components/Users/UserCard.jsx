@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import usersStyle from "./Users.module.css";
 import avatar from "../../assets/images/avatar.svg";
 import {NavLink} from "react-router-dom";
-import UsersPages from "./UsersPaginator";
 
 let UsersCard = (props) => {
+
     return (
             <div>
                 {props.users.map(u =>

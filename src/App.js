@@ -1,12 +1,12 @@
-import React from "react";
+import React, {Suspense} from "react";
 import './App.css';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Friends from "./components/Friends/Friends";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import UsersContainer from "./components/Users/UsersContainer";
+// import DialogsContainer from "./components/Dialogs/DialogsContainer";
+// import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import SidebarContainer from "./components/Sidebar/SidebarContainer";
@@ -17,6 +17,8 @@ import {compose} from "redux";
 import {withRouter} from "./hoc/withRouter";
 import Preloader from "./components/common/preloader/preloader";
 
+const DialogsContainer = React.lazy( () => import('./components/Dialogs/DialogsContainer'));
+const UsersContainer = React.lazy( () => import('./components/Users/UsersContainer'));
 
 class App extends React.Component {
 
@@ -25,17 +27,20 @@ class App extends React.Component {
     }
 
     render() {
-        if(!this.props.initialized) {
+        if (!this.props.initialized) {
             return <Preloader/>
         }
 
         return (
-                <div className='app-wrapper'>
-                    <HeaderContainer/>
-                    <SidebarContainer
-                    />
-                    <div className='app-wrapper-content'>
+
+            <div className='app-wrapper'>
+                <HeaderContainer/>
+                <SidebarContainer
+                />
+                <div className='app-wrapper-content'>
+                    <Suspense fallback={<div><Preloader/></div>}>
                         <Routes>
+                            <Route path="/*" element={<ProfileContainer/>}/>
                             <Route path="/profile/:userId" element={<ProfileContainer/>}></Route>
                             <Route path="/profile/" element={<ProfileContainer/>}/>
                             <Route path="/dialogs/*" element={<DialogsContainer/>}/>
@@ -47,8 +52,9 @@ class App extends React.Component {
                             <Route path="/users/*" element={<UsersContainer/>}/>
                             <Route path="/friends/*" element={<Friends/>}/>
                         </Routes>
-                    </div>
+                    </Suspense>
                 </div>
+            </div>
         );
     }
 }
@@ -59,5 +65,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
     withRouter,
-    connect(mapStateToProps, { initializeApp })
-) (App);
+    connect(mapStateToProps, {initializeApp})
+)(App);
