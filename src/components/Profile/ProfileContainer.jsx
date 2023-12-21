@@ -1,48 +1,66 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {addPost, deletePost, getStatus, getUserProfile, updateStatus} from "../../redux/profileReducer";
+import {
+    addPost,
+    deletePost,
+    getStatus,
+    getUserProfile, updateInfo, updateName,
+    updatePhoto,
+    updateStatus,
+    updPhoto
+} from "../../redux/profileReducer";
 import {compose} from "redux";
 import {withRouter} from "../../hoc/withRouter";
 
-class ProfileContainer extends React.Component {
+const ProfileContainer = (props) => {
+    let userId = props.match.params.userId;
 
-    componentDidMount() {
-        let userId = this.props.match.params.userId;
+    const [editMode, setEditMode] = useState(false);
+
+    const aEditMode = () => {
+        !userId && setEditMode(true);
+    }
+
+    const dEditMode = () => {
+        setEditMode(false)
+    }
+
+    const onSubmit = (data) => {
+        props.updateInfo(data)
+        setEditMode(false)
+    }
+
+    const refreshProfile = () => {
         if (!userId) {
-            userId = this.props.authUserId;
+            userId = props.authUserId;
         }
-        if (!userId) {
-            console.error("ID should exists in URI params or in state ('authorizedUserId')");
-        } else {
-            this.props.getUserProfile(userId)
-            this.props.getStatus(userId)
-        }
-        // this.props.getUserProfile(userId);
-        // this.props.getStatus(userId);
+        props.getUserProfile(userId)
+        props.getStatus(userId)
     }
 
-    componentDidUpdate(prevProps) {
-        let userId = this.props.match.params.userId
-        if (prevProps.match.params.userId !== userId) {
-            this.props.getUserProfile(this.props.authUserId);
-            this.props.getStatus(this.props.authUserId);
-        }
-        if(prevProps.status !==  this.props.status) {
-            this.setState({
-                status: this.props.status
-            })
-        }
-    }
+    useEffect(() => {
+        refreshProfile();
+    }, [props.match.params.userId]);
 
-    render() {
-        return (
-            <Profile {...this.props} profile={this.props.profile}
-                     status={this.props.status} updateStatus={this.props.updateStatus}
-                     addPost={this.props.addPost} deletePost={this.props.deletePost} posts={this.props.posts}
-            />
-        )
-    }
+    return (
+
+        <Profile {...props}
+                 isOwner={!props.match.params.userId}
+                 profile={props.profile}
+                 status={props.status}
+                 updateStatus={props.updateStatus}
+                 addPost={props.addPost}
+                 deletePost={props.deletePost}
+                 posts={props.posts}
+                 updPhoto={props.updPhoto}
+                 dEditMode={dEditMode}
+                 onSubmit={onSubmit}
+                 aEditMode={aEditMode}
+                 editMode={editMode}
+
+        />
+    )
 }
 
 let mapStateToProps = (state) => ({
@@ -55,5 +73,5 @@ let mapStateToProps = (state) => ({
 
 export default compose(
     withRouter,
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, addPost, deletePost})
-) (ProfileContainer);
+    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, addPost, deletePost, updPhoto, updateInfo})
+)(ProfileContainer);

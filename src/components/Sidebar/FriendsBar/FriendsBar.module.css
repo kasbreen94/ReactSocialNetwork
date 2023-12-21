@@ -1,9 +1,9 @@
 .friends {
-    margin-top: 10px;
-    background-color: rgba(28, 96, 243, 0.17);
-    border-radius: 5px;
+    /*margin-top: 10px;*/
+    /*background-color: rgba(28, 96, 243, 0.17);*/
+    /*border-radius: 5px;*/
     height: 210px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
     overflow: auto;
 }
 
@@ -27,7 +27,8 @@
 }
 
 .item {
-    margin-top: 15px;
+    font-weight: 600;
+    margin-top: 30px;
     margin-left: 8px;
     margin-right: 80px;
     color: azure;
@@ -78,11 +79,15 @@
     padding: 5px 5px;
 }
 
-.line {
-    background-color: rgba(1, 255, 81, 0.25);
-    width: 180px;
-    height: 1px;
-    margin: 15px auto 0;
-    box-shadow: 0 0 5px rgba(1, 255, 81, 0.25);
-    border-radius: 15px;
+.friend {
+    font-size: 12px;
 }
+
+/*.line {*/
+/*    background-color: rgba(1, 255, 81, 0.25);*/
+/*    width: 30px;*/
+/*    height: 1px;*/
+/*    margin: 15px auto 0;*/
+/*    box-shadow: 0 0 5px rgba(1, 255, 81, 0.25);*/
+/*    border-radius: 15px;*/
+/*}*/

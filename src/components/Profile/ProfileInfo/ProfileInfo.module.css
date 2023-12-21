@@ -2,6 +2,14 @@
     padding-bottom: 20px;
 }
 
+.blockName {
+    display: block;
+    margin: 20px auto;
+    width: 100px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
 .profileLogo img{
     border-radius: 5px;
     width: 100%;
@@ -12,16 +20,15 @@
     display: grid;
     grid-template-areas:
     'e e'
-    'a b'
-    'c d';
-    grid-template-columns: 200px 3fr
-;
+    'a b';
+    grid-template-columns: 200px 3fr;
 
     min-height: 150px;
-    background-color: rgba(28, 96, 243, 0.17);
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+    /*background-color: rgba(28, 96, 243, 0.17);*/
+    /*border-radius: 30px;*/
+    padding: 20px;
+    /*box-shadow: 0 0 5px rgba(1, 255, 81, 0.25);*/
+    margin-top: 5px;
 }
 
 .Photo {
@@ -29,21 +36,98 @@
 }
 
 .Photo img {
-    border-color: rgba(1, 255, 81, 0.18);
-    border-style: inset;
     border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.62);
     margin-top: 15px;
     width: 150px;
 }
 
-.descriptionInfo {
-    margin: 35px 0 0;
-    grid-area: b;
-    background-color: rgba(1, 255, 81, 0.2);
-    border-radius: 5px;
+.Photo img:hover ~ .downPhoto{
+    display: inline-block;
+    position: absolute;
+    margin: 30px auto 0 -538px;
+}
+
+.downPhoto {
+    display: none;
+    width: 100%;
+    position: relative;
+    margin: 40px 0;
+    text-align: center;
+}
+
+.downPhoto:hover {
+    display: inline-block;
+    position: absolute;
+    margin: 30px auto 0 -538px;
+}
+
+.inputDownPhoto {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.btnDownPhoto {
+    border-radius: 3px;
+    background-color: rgba(32, 101, 53, 0.94);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
-    padding: 2px 5px;
-    width: 450px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+
+.selectInfo {
+    display: flex;
+    gap: 10px;
+    text-align: center;
+    height: 25px;
+}
+
+.selectInfo button{
+    cursor: pointer;
+    color: azure;
+    border: none;
+    /*width: 80px;*/
+    background: none;
+    /*background-color: rgba(1, 255, 81, 0.2);*/
+    /*border-radius: 5px;*/
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
+    /*padding: 5px;*/
+    text-shadow: 2px 2px 4px black;
+    font-weight: 600;
+    text-align: center;
+
+}
+
+.line {
+    background-color: rgba(1, 255, 81, 0.25);
+    margin: 10px auto 0 17px;
+    width: 200px;
+    height: 1px;
+    box-shadow: 0 0 5px rgba(1, 255, 81, 0.25);
+    border-radius: 15px;
+}
+
+/*.lineWrapper {*/
+/*    background-color: rgba(1, 255, 81, 0.25);*/
+/*    margin: 20px auto 0;*/
+/*    width: 90%;*/
+/*    height: 1px;*/
+/*    box-shadow: 0 0 5px rgba(1, 255, 81, 0.25);*/
+/*    border-radius: 15px;*/
+/*}*/
+
+.descriptionInfo {
+    grid-area: b;
+    /*background-color: rgba(1, 255, 81, 0.2);*/
+    /*border-radius: 5px;*/
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
+    padding: 10px;
+    height: 133px;
+    width: 430px;
+    /*border-radius: 15px;*/
+    /*box-shadow: 0 0 5px rgba(1, 255, 81, 0.25);*/
 }
 
 .descriptionItem {
@@ -56,14 +140,16 @@
 }
 
 .contacts {
-    min-height: 20px;
-    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     grid-area: c;
-    background-color: rgba(1, 255, 81, 0.2);
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
-    padding: 2px 5px;
-    width: 200px;
+    /*background-color: rgba(1, 255, 81, 0.2);*/
+    /*border-radius: 5px;*/
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
+    padding: 10px;
+    height: 133px;
+    width: 430px;
     word-wrap: break-word;
 }
 .contacts a {
@@ -73,13 +159,12 @@
 
 .aboutMe {
     grid-area: d;
-    background-color: rgba(1, 255, 81, 0.2);
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
-    padding: 2px 5px;
-    min-height: 150px;
+    /*background-color: rgba(1, 255, 81, 0.2);*/
+    /*border-radius: 5px;*/
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
+    padding: 10px;
+    height: 133px;
     width: 430px;
-    margin: 20px 0 0 20px;
 }
 
 .aboutMe span {
@@ -99,20 +184,20 @@
 .statusEdit {
     display: inline-block;
     cursor: pointer;
-    background-color: rgba(1, 255, 81, 0.2);
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+    /*background-color: rgba(1, 255, 81, 0.2);*/
+    /*border-radius: 5px;*/
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
     padding: 5px;
-    width: 585px;
 }
 
 .statusInput {
     border: none;
     outline: none;
     color: azure;
-    background-color: rgba(1, 255, 81, 0.2);
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+    /*background-color: rgba(1, 255, 81, 0.2);*/
+    /*border-radius: 5px;*/
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
     padding: 5px;
-    width: 585px;
+    background: none;
 }
+

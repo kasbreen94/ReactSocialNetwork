@@ -15,6 +15,9 @@ let Users = (props) => {
                       followingInProgress={props.followingInProgress}
                       unfollow={props.unfollow}
                       follow={props.follow}
+                      pageSize={props.pageSize}
+                      onPageChanged={props.onPageChanged}
+                      requestUsers={props.requestUsers}
             />
         </div>
     )

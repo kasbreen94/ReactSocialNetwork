@@ -4,7 +4,7 @@ const instanse = axios.create ({
     withCredentials: true,
     baseURL:'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-        "API-KEY": "911ab96a-8ca5-43d7-ab4d-214ef48c7cee"
+        "API-KEY": "80f7eb98-d03d-4e4e-bcc2-ee3aa206800e"
     }
 });
 
@@ -12,8 +12,8 @@ export const usersAPI = {
     getProfile(userId) {
         return profileAPI.getProfile(userId);
     },
-    getUsers(currentPage, pageSize) {
-        return instanse.get(`users?page=${currentPage}&count=${pageSize}`, {});
+    getUsers(count) {
+        return instanse.get(`https://social-network.samuraijs.com/api/1.0/users?count=${count}`);
     },
     deleteUserUnfollow(userId) {
         return instanse.delete(`follow/${userId}`, {});
@@ -32,6 +32,19 @@ export const profileAPI = {
     },
     updateStatus(status) {
         return instanse.put(`profile/status`, {status: status});
+    },
+    updatePhoto(file) {
+        let formData = new FormData();
+        formData.append("image", file)
+
+        return instanse.put(`profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    },
+    updateInfo(profile) {
+        return instanse.put(`https://social-network.samuraijs.com/api/1.0/profile`, profile);
     }
 }
 

@@ -11,7 +11,7 @@ const FriendsBar = (props) => {
                          className={({isActive}) => isActive ? friendsBarStyle.active : friendsBarStyle.item}>Friends</NavLink>
                 <span>Online</span>
             </div>
-            <div className={friendsBarStyle.line}></div>
+            {/*<div className={friendsBarStyle.line}></div>*/}
             {props.friends.map(friend =>
                 <div className={friendsBarStyle.friend} key={friend.id}>
                     <img src={friend.avatar} alt=""/>

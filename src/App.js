@@ -3,7 +3,7 @@ import './App.css';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {Route, Routes} from "react-router-dom";
+import {Navigate, NavLink, Route, Routes} from "react-router-dom";
 import Friends from "./components/Friends/Friends";
 // import DialogsContainer from "./components/Dialogs/DialogsContainer";
 // import UsersContainer from "./components/Users/UsersContainer";
@@ -32,20 +32,17 @@ class App extends React.Component {
         }
 
         return (
-
             <div className='app-wrapper'>
                 <HeaderContainer/>
-                <SidebarContainer
-                />
+                <SidebarContainer/>
                 <div className='app-wrapper-content'>
                     <Suspense fallback={<div><Preloader/></div>}>
                         <Routes>
                             <Route path="/*" element={<ProfileContainer/>}/>
-                            <Route path="/profile/:userId" element={<ProfileContainer/>}></Route>
-                            <Route path="/profile/" element={<ProfileContainer/>}/>
+                            <Route path="/profile/:userId/*" element={<ProfileContainer/>}></Route>
+                            <Route path="/profile/*" element={<ProfileContainer/>}/>
                             <Route path="/dialogs/*" element={<DialogsContainer/>}/>
                             <Route path="/login/*" element={<Login/>}/>
-
                             <Route path="/news/*" element={<News/>}/>
                             <Route path="/music/*" element={<Music/>}/>
                             <Route path="/settings/*" element={<Settings/>}/>
