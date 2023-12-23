@@ -1,6 +1,9 @@
 import React from "react";
 import PostStyle from './Post.module.css'
 import like from '../../../../assets/images/like2.svg'
+import avatar from "../../../../assets/images/avatar.svg";
+import MyPostsStyle from "../MyPosts.module.css";
+import {AddPostForm} from "../AddPostFormHook";
 
 const Post = (props) => {
 
@@ -8,9 +11,7 @@ const Post = (props) => {
         <>
         {[...props.posts].reverse().map(posts =>
         <div className={PostStyle.post} key={posts.id}>
-                <img
-                    src='https://yt3.googleusercontent.com/5qGfYBSceW4UwQ_rD-siXINsmD5HdinnNaa4xCZh23deGUow2KwrlaD6K3m5IhByDyAR0rnw0MM=s900-c-k-c0x00ffffff-no-rj'
-                    alt='none'/>
+            <img src={avatar} alt=''/>
                 <div className={PostStyle.message}>
                     {posts.message}
                     <span onClick={props.deletePost} className={PostStyle.tagRemove}></span>
@@ -25,3 +26,4 @@ const Post = (props) => {
 }
 
 export default Post;
+

@@ -1,6 +1,5 @@
 import s from "../../ProfileInfo.module.css";
-import React, {useState} from "react";
-import {ContactsForm} from "./ContactsForm";
+import React from "react";
 
 
 const Contacts = (props) => {
@@ -8,9 +7,10 @@ const Contacts = (props) => {
     return (
         <div className={s.contacts}>
                 <div>
-                    {Object.entries(props.contacts).filter(([c, v]) => c && v !== null).map(([key, value]) =>
-                        <div key={key.id}>
-                            <a href={value}>{key}</a>
+                    {Object.entries(props.contacts).filter(([c, v]) => c && v !== null && c && v !== "").map(([key, value]) =>
+                        <div key={key.id} >
+                            {key} :
+                            <a href={value}>{value}</a>
                         </div>)}
                 </div>
         </div>

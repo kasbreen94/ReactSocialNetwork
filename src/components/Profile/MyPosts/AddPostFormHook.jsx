@@ -1,5 +1,6 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
+import MyPostsStyle from "./MyPosts.module.css";
 
 export const AddPostForm = (props) => {
     const {
@@ -17,7 +18,7 @@ export const AddPostForm = (props) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className={MyPostsStyle.addPost}>
             <textarea placeholder="Add your text"
                 {...register("newPostText", {
                     required: "Add your text",
@@ -29,7 +30,7 @@ export const AddPostForm = (props) => {
             <div>
                 {errors?.textarea && <p>{errors?.textarea?.message || "Error!"}</p>}
             </div>
-            <button type="submit" disabled={!isValid}>Send</button>
+            <button type="submit" disabled={!isValid}>Add post</button>
         </form>
     )
 }

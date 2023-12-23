@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React, {lazy, Suspense} from "react";
 import './App.css';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
@@ -17,8 +17,8 @@ import {compose} from "redux";
 import {withRouter} from "./hoc/withRouter";
 import Preloader from "./components/common/preloader/preloader";
 
-const DialogsContainer = React.lazy( () => import('./components/Dialogs/DialogsContainer'));
-const UsersContainer = React.lazy( () => import('./components/Users/UsersContainer'));
+const DialogsContainer = lazy( () => import('./components/Dialogs/DialogsContainer'));
+const UsersContainer = lazy( () => import('./components/Users/UsersContainer'));
 
 class App extends React.Component {
 
@@ -38,9 +38,10 @@ class App extends React.Component {
                 <div className='app-wrapper-content'>
                     <Suspense fallback={<div><Preloader/></div>}>
                         <Routes>
-                            <Route path="/*" element={<ProfileContainer/>}/>
-                            <Route path="/profile/:userId/*" element={<ProfileContainer/>}></Route>
-                            <Route path="/profile/*" element={<ProfileContainer/>}/>
+                            <Route path="*" element={<Navigate to={"/"}/>}/>
+                            <Route path="/" element={<Navigate to={"profile/"}/>}/>
+                            <Route path="/profile/:userId?" element={<ProfileContainer/>}/>
+                            {/*<Route path="/profile/*" element={<ProfileContainer/>}/>*/}
                             <Route path="/dialogs/*" element={<DialogsContainer/>}/>
                             <Route path="/login/*" element={<Login/>}/>
                             <Route path="/news/*" element={<News/>}/>

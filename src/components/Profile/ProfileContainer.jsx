@@ -16,20 +16,7 @@ import {withRouter} from "../../hoc/withRouter";
 const ProfileContainer = (props) => {
     let userId = props.match.params.userId;
 
-    const [editMode, setEditMode] = useState(false);
 
-    const aEditMode = () => {
-        !userId && setEditMode(true);
-    }
-
-    const dEditMode = () => {
-        setEditMode(false)
-    }
-
-    const onSubmit = (data) => {
-        props.updateInfo(data)
-        setEditMode(false)
-    }
 
     const refreshProfile = () => {
         if (!userId) {
@@ -54,11 +41,7 @@ const ProfileContainer = (props) => {
                  deletePost={props.deletePost}
                  posts={props.posts}
                  updPhoto={props.updPhoto}
-                 dEditMode={dEditMode}
-                 onSubmit={onSubmit}
-                 aEditMode={aEditMode}
-                 editMode={editMode}
-
+                 updateInfo={props.updateInfo}
         />
     )
 }

@@ -1,22 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import s from "./../../../Profile.module.css"
-import {profileAPI} from "../../../../../api/api";
-import {getUserProfile} from "../../../../../redux/profileReducer";
-import {useParams} from "react-router-dom";
 
 
 export const MainInfoEditForm = (props) => {
-
-    const [mainInfo, setMainInfo] = useState(true);
-    const [aboutMe, setAboutMe] = useState(false);
-    const [contacts, setContacts] = useState(false);
-
-    const setInfoDisplay = (mainInfo, AboutMe, Contacts) => {
-        setMainInfo(mainInfo);
-        setAboutMe(AboutMe);
-        setContacts(Contacts)
-    }
 
     const {
         register,
@@ -30,22 +17,10 @@ export const MainInfoEditForm = (props) => {
     return (
         <div className={s.profileEditFormWrapper}>
             <form onSubmit={handleSubmit(props.onSubmit)} className={s.profileEditForm}>
-                <nav className={s.selectInfo}>
-                    <div onClick={() => {
-                        setInfoDisplay(true, false, false)
-                    }}>Main info
-                    </div>
-                    <div onClick={() => {
-                        setInfoDisplay(false, true, false)
-                    }}> About me
-                    </div>
-                    <div onClick={() => {
-                        setInfoDisplay(false, false, true)
-
-                    }}>Contacts
-                    </div>
-                </nav>
-                {mainInfo && <div>
+                <button type="submit" disabled={!isValid} className={s.save}>Save</button>
+                <div onClick={props.dEditMode} className={s.close}>Close</div>
+                <div className={s.line}></div>
+                {props.mainInfo && <div>
                     <div>
                         Name ->
                         <input placeholder="enter your name"
@@ -58,32 +33,29 @@ export const MainInfoEditForm = (props) => {
                     </div>
                     <div>
                         My professional skills ->
-                        <input placeholder="enter your email"
-                               {...register("lookingForAJobDescription", {})}/>
+                        <textarea placeholder="enter your email" maxLength={300}
+                                  {...register("lookingForAJobDescription", {})}/>
                     </div>
 
                 </div>}
-                {aboutMe && <div>
+                {props.aboutMe && <div >
                     About Me ->
-                    <input placeholder="enter your email"
-                           {...register("aboutMe", {}
+                    <textarea placeholder="enter your email" maxLength={300}
+                           {...register("aboutMe", {
+                               }
                            )}/>
                 </div>}
 
-                {contacts && <div>
-
+                {props.contacts && <div>
                     {Object.keys(props.profile.contacts).map(c =>
-                        <div>
+                        <div key={c.key}>
                             {c} ->
-                            <input placeholder="enter your text"
+                            <input placeholder="enter your text" className={s.contacts}
                                    {...register(`contacts.${c}`, {
 
                                    })}/>
                         </div>)}
-
                 </div>}
-                <button type="submit" disabled={!isValid}>Save</button>
-                <button onClick={() => props.dEditMode}>Close</button>
             </form>
             {/*{response && (<p>Данные успешно отправлены</p>)}*/}
         </div>

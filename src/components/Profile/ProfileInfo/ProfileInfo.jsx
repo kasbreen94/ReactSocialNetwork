@@ -6,6 +6,7 @@ import ProfileStatusHooks from "./ProfileStatusHooks";
 import DescriptionInfo from "./Info/Main info/DescriptionInfo";
 import Contacts from "./Info/Contacts/Contacts";
 import AboutMe from "./Info/AboutMe";
+import {MainInfoEditForm} from "./Info/Main info/MainInfoEditForm";
 
 const ProfileInfo = (props) => {
 
@@ -17,6 +18,21 @@ const ProfileInfo = (props) => {
         setMainInfo(mainInfo);
         setAboutMe(AboutMe);
         setContacts(Contacts)
+    }
+
+    const [editMode, setEditMode] = useState(false);
+
+    const aEditMode = () => {
+        props.isOwner && setEditMode(true);
+    }
+
+    const dEditMode = () => {
+        setEditMode(false)
+    }
+
+    const onSubmit = (data) => {
+        props.updateInfo(data)
+        setEditMode(false)
     }
 
     const mainPhotoSelected = (e) => {
@@ -31,10 +47,8 @@ const ProfileInfo = (props) => {
 
     return (
         <div className={s.info}>
-            <span className={s.blockName}>Profile</span>
             <div className={s.profileInfo}>
                 <ProfileStatusHooks isOwner={props.isOwner} status={props.status} updateStatus={props.updateStatus}/>
-
                 <div className={s.Photo}>
                     <div>
                         <img src={props.profile.photos.large || avatar} alt=''/>
@@ -49,50 +63,57 @@ const ProfileInfo = (props) => {
                     </div>
                 </div>
                 <div>
-
                     <nav className={s.selectInfo}>
                         <button onClick={() => {
                             setInfoDisplay(true, false, false)
-                        }}>Main info
+                        }}
+                                className={mainInfo ? s.active : undefined}>Main info
                         </button>
                         <button onClick={() => {
                             setInfoDisplay(false, true, false)
-                        }}>About me
+                        }}
+                                className={aboutMe ? s.active : undefined}>About me
                         </button>
                         <button onClick={() => {
                             setInfoDisplay(false, false, true)
-                        }}>Contacts
+                        }}
+                                className={contacts ? s.active : undefined}>Contacts
                         </button>
                         {props.isOwner && <div>
-                            <button onClick={props.aEditMode}>Edit profile</button>
+                            <button onClick={aEditMode}
+                                    className={editMode ? s.active : undefined}
+                            >{editMode ? 'Editing mode' : 'Edit a profile'}</button>
                         </div>}
-
-
                     </nav>
-
                     <div className={s.line}></div>
 
-                    {mainInfo && <DescriptionInfo
-                        fullName={props.profile.fullName}
-                        lookingForAJob={props.profile.lookingForAJob}
-                        lookingForAJobDescription={props.profile.lookingForAJobDescription}
-                        isOwner={props.isOwner}
-                        profile={props.profile}
-                        updateInfo={props.updateInfo}
-                        editMode={props.editMode}
-                    />}
-                    {contacts && <Contacts
-                        contacts={props.profile.contacts}
-                        isOwner={props.isOwner}
-                        updateInfo={props.updateInfo}/>}
-                    {aboutMe && <AboutMe
-                        aboutMe={props.profile.aboutMe}
-                        isOwner={props.isOwner}/>}
-
+                    {editMode
+                        ? <MainInfoEditForm
+                            mainInfo={mainInfo}
+                            contacts={contacts}
+                            aboutMe={aboutMe}
+                            onSubmit={onSubmit}
+                            aEditMode={aEditMode}
+                            profile={props.profile}
+                            dEditMode={dEditMode}
+                        />
+                        : <div>
+                            {mainInfo && <DescriptionInfo
+                                fullName={props.profile.fullName}
+                                lookingForAJob={props.profile.lookingForAJob}
+                                lookingForAJobDescription={props.profile.lookingForAJobDescription}
+                            />}
+                            {contacts && <Contacts
+                                contacts={props.profile.contacts}
+                                isOwner={props.isOwner}
+                            />}
+                            {aboutMe && <AboutMe
+                                aboutMe={props.profile.aboutMe}
+                                isOwner={props.isOwner}/>}
+                        </div>
+                    }
                 </div>
             </div>
-
-            <div className={s.lineWrapper}></div>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import MyPostsStyle from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {AddPostForm} from "./AddPostFormHook";
 
-const MyPosts = React.memo(props => {
+const MyPosts = (props) => {
 
     console.log("RENDER")
 
@@ -12,19 +12,17 @@ const MyPosts = React.memo(props => {
     }
 
     return (
-        <div className={MyPostsStyle.posts}>
-            <span>Posts</span>
-        <div>
-
-            <div className={MyPostsStyle.addPost}>
+        <div className={MyPostsStyle.postsWrapper}>
+            {/*<span>Posts</span>*/}
+            <div className={MyPostsStyle.posts}>
                 <AddPostForm onSubmit={addNewPost}/>
+
+                <div>
+                    <Post posts={props.posts} deletePost={props.deletePost} />
+                </div>
             </div>
         </div>
-        <div>
-            <Post posts={props.posts} deletePost={props.deletePost}/>
-        </div>
-    </div>
 )
-});
+};
 
 export default MyPosts;

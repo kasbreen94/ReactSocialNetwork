@@ -25,7 +25,7 @@ const ProfileStatusHooks = (props) => {
 
     return (
         <div className={ProfileInfoStyle.status}>
-            <span>Status:</span>
+            <span>Status :</span>
             <span>
                     {!editMode &&
                         <span className={ProfileInfoStyle.statusEdit}
