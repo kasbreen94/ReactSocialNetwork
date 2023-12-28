@@ -11,7 +11,7 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import SidebarContainer from "./components/Sidebar/SidebarContainer";
 import Login from "./components/Login/Login";
-import {initializeApp} from "./redux/app_Reducer";
+import {initializeApp} from "./redux/app_Reducer.ts";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {withRouter} from "./hoc/withRouter";

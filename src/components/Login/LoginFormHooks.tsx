@@ -1,8 +1,20 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {useForm} from "react-hook-form";
 import s from './Login.module.css'
 
-export const LoginForm = (props) => {
+type PropsType = {
+    login: (email: string, password: string, rememberMe: boolean, captcha: string | null) => void
+    captcha: string | null
+}
+
+type LoginFormValueType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: string | null
+}
+
+export const LoginForm: FC<PropsType> = (props) => {
     const {
         register,
         formState: {errors, isValid},
@@ -12,7 +24,7 @@ export const LoginForm = (props) => {
         mode: "onBlur"
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: LoginFormValueType) => {
         props.login(data.email, data.password, data.rememberMe, data.captcha)
     }
 

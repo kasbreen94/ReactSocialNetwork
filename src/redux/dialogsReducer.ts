@@ -1,6 +1,18 @@
+// @ts-ignore
 import avatar from "../assets/images/avatar.svg";
 
-const ADD_MESSAGE = 'dialogs/ADD_MESSAGE';
+const ADD_MESSAGE = 'dialogs/ADD_MESSAGE'
+
+type MessageType = {
+    id: number
+    name: string
+    avatar: string | null
+}
+
+type DialogType = {
+    id: number
+    message: string
+}
 
 let initialState = {
     messages: [
@@ -10,7 +22,7 @@ let initialState = {
         {id: 4, message: 'lacus sed viverra tellus in'},
         {id: 5, message: 'mauris a diam maecenas sed'},
         {id: 6, message: 'euismod quis viverra nibh cras'}
-    ],
+    ] as Array<DialogType>,
     dialogs: [
         {id: 1, name: 'Dmitriy', avatar: avatar},
         {id: 2, name: 'Andrey', avatar: avatar},
@@ -18,14 +30,16 @@ let initialState = {
         {id: 4, name: 'Sasha', avatar: avatar},
         {id: 5, name: 'Viktor', avatar: avatar},
         {id: 6, name: 'Valera', avatar: avatar}
-    ]
+    ] as Array<MessageType>
 }
 
-const dialogsReducer = (state = initialState, action) => {
+export type initialStateType = typeof initialState
+
+const dialogsReducer = (state = initialState, action: any): initialStateType => {
 
     switch (action.type) {
         case ADD_MESSAGE: {
-            return  {
+            return {
                 ...state,
                 messages: [...state.messages, {id: 7, message: action.newMessage}]
             };
@@ -35,6 +49,11 @@ const dialogsReducer = (state = initialState, action) => {
     }
 }
 
-export const addMessage = (newMessage) => ({type: ADD_MESSAGE, newMessage})
+type AddMessageActionType = {
+    type: typeof ADD_MESSAGE
+    newMessage: string
+}
+
+export const addMessage = (newMessage: string): AddMessageActionType => ({type: ADD_MESSAGE, newMessage})
 
 export default dialogsReducer;

@@ -11,6 +11,8 @@ const MyPosts = (props) => {
         props.addPost(values.newPostText)
     }
 
+
+
     return (
         <div className={MyPostsStyle.postsWrapper}>
             {/*<span>Posts</span>*/}

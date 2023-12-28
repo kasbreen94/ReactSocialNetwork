@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useForm} from "react-hook-form";
 import s from "./../../../Profile.module.css"
 
@@ -22,24 +22,24 @@ export const MainInfoEditForm = (props) => {
                 <div className={s.line}></div>
                 {props.mainInfo && <div>
                     <div>
-                        Name ->
+                        Name:
                         <input placeholder="enter your name"
                                {...register("fullName", {})}/>
                     </div>
                     <div className={s.checkbox}>
-                        Looking for a job ->
+                        Looking for a job:
                         <input type={"checkbox"} placeholder="enter your password"
                                {...register("lookingForAJob", {})}/>
                     </div>
                     <div>
-                        My professional skills ->
+                        My professional skills:
                         <textarea placeholder="enter your email" maxLength={300}
                                   {...register("lookingForAJobDescription", {})}/>
                     </div>
 
                 </div>}
                 {props.aboutMe && <div >
-                    About Me ->
+                    About Me:
                     <textarea placeholder="enter your email" maxLength={300}
                            {...register("aboutMe", {
                                }
@@ -49,7 +49,7 @@ export const MainInfoEditForm = (props) => {
                 {props.contacts && <div>
                     {Object.keys(props.profile.contacts).map(c =>
                         <div key={c.key}>
-                            {c} ->
+                            {c}:
                             <input placeholder="enter your text" className={s.contacts}
                                    {...register(`contacts.${c}`, {
 
@@ -57,7 +57,6 @@ export const MainInfoEditForm = (props) => {
                         </div>)}
                 </div>}
             </form>
-            {/*{response && (<p>Данные успешно отправлены</p>)}*/}
         </div>
     )
 }

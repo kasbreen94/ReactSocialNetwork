@@ -1,22 +1,41 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef, useState} from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {
-    addPost,
-    deletePost,
+    addPost, deletePost,
     getStatus,
-    getUserProfile, updateInfo, updateName,
-    updatePhoto,
+    getUserProfile, updateInfo,
     updateStatus,
     updPhoto
 } from "../../redux/profileReducer";
 import {compose} from "redux";
 import {withRouter} from "../../hoc/withRouter";
+import {PostType, ProfileType} from "../../redux/types/types";
+import {AppStateType} from "../../redux/redux_store";
 
-const ProfileContainer = (props) => {
+type MapStateToPropsType = {
+    posts: PostType
+    profile: ProfileType
+    status: string
+    authUserId: number
+    isAuth: boolean
+    match: any
+}
+
+type MapDispatchToPropsType = {
+    getUserProfile: (userId: number) => void
+    getStatus: (userId: number) => void
+    updateStatus: (status: string) => void
+    addPost:(newPostText: string) => void
+    deletePost: (postId: number) => void
+    updPhoto: (file: any) => void
+    updateInfo: (profile: ProfileType) => void
+}
+
+type PropsType = MapStateToPropsType & MapDispatchToPropsType
+
+const ProfileContainer: FC<PropsType> = (props) => {
     let userId = props.match.params.userId;
-
-
 
     const refreshProfile = () => {
         if (!userId) {
@@ -28,7 +47,7 @@ const ProfileContainer = (props) => {
 
     useEffect(() => {
         refreshProfile();
-    }, [props.match.params.userId]);
+    }, [userId]);
 
     return (
 
@@ -46,7 +65,7 @@ const ProfileContainer = (props) => {
     )
 }
 
-let mapStateToProps = (state) => ({
+let mapStateToProps = (state: AppStateType) => ({
     posts: state.profilePage.posts,
     profile: state.profilePage.profile,
     status: state.profilePage.status,
