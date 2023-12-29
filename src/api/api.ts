@@ -10,9 +10,9 @@ const instanse = axios.create({
 });
 
 export const usersAPI = {
-    getProfile(userId: number) {
-        return profileAPI.getProfile(userId);
-    },
+    // getProfile(userId: number) {
+    //     return profileAPI.getProfile(userId);
+    // },
     getUsers(count: number) {
         return instanse.get(`https://social-network.samuraijs.com/api/1.0/users?count=${count}`);
     },

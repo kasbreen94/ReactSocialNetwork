@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef} from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {
@@ -9,17 +9,17 @@ import {
     updPhoto
 } from "../../redux/profileReducer";
 import {compose} from "redux";
-import {withRouter} from "../../hoc/withRouter";
 import {PostType, ProfileType} from "../../redux/types/types";
 import {AppStateType} from "../../redux/redux_store";
+import {useParams} from "react-router-dom";
 
 type MapStateToPropsType = {
-    posts: PostType
-    profile: ProfileType
+    posts: Array<PostType>
+    profile: ProfileType | null
     status: string
-    authUserId: number
+    authUserId: number | null
     isAuth: boolean
-    match: any
+
 }
 
 type MapDispatchToPropsType = {
@@ -35,24 +35,30 @@ type MapDispatchToPropsType = {
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
 const ProfileContainer: FC<PropsType> = (props) => {
-    let userId = props.match.params.userId;
+
+    const params = useParams()
+    let userId: number | null  = Number(params.userId)
 
     const refreshProfile = () => {
+
         if (!userId) {
             userId = props.authUserId;
         }
-        props.getUserProfile(userId)
-        props.getStatus(userId)
+
+        if (typeof userId === "number") {
+            props.getUserProfile(userId)
+            props.getStatus(userId)
+        }
     }
 
     useEffect(() => {
-        refreshProfile();
+        refreshProfile()
     }, [userId]);
 
     return (
 
         <Profile {...props}
-                 isOwner={!props.match.params.userId}
+                 isOwner={!userId}
                  profile={props.profile}
                  status={props.status}
                  updateStatus={props.updateStatus}
@@ -74,6 +80,6 @@ let mapStateToProps = (state: AppStateType) => ({
 });
 
 export default compose(
-    withRouter,
+    // withRouter,
     connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, addPost, deletePost, updPhoto, updateInfo})
 )(ProfileContainer);

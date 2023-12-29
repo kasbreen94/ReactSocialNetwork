@@ -15,7 +15,7 @@ type FriendsType = {
 
 let initialState = {
     navbar: [
-        {id: 1, select: 'Profile', address: 'profile', icon: avatar},
+        {id: 1, select: 'Profile', address: '', icon: avatar},
         {id: 2, select: 'Messages', address: 'dialogs', icon: avatar},
         {id: 4, select: 'Users', address: 'users', icon: avatar},
         {id: 5, select: 'News', address: 'news', icon: avatar},

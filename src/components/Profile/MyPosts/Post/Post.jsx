@@ -7,9 +7,9 @@ import {AddPostForm} from "../AddPostFormHook";
 
 const Post = (props) => {
 
-    let onDeletePost = (postId) => {
-        props.deletePost(postId.deletePost)
-    }
+    // let onDeletePost = (postId) => {
+    //     props.deletePost(postId.deletePost)
+    // }
     return (
         <>
         {[...props.posts].reverse().map(posts =>
@@ -17,7 +17,7 @@ const Post = (props) => {
             <img src={avatar} alt=''/>
                 <div className={PostStyle.message}>
                     {posts.message}
-                    <span onClick={onDeletePost} className={PostStyle.tagRemove}></span>
+                    <span onClick={() => props.deletePost(posts.id)} className={PostStyle.tagRemove}></span>
                 </div>
                 <div className={PostStyle.like}>
                     <img src={like} alt='2'/>

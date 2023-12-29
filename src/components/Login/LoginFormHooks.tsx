@@ -20,7 +20,7 @@ export const LoginForm: FC<PropsType> = (props) => {
         formState: {errors, isValid},
         handleSubmit,
         reset
-    } = useForm({
+    } = useForm<LoginFormValueType>({
         mode: "onBlur"
     });
 
@@ -47,8 +47,8 @@ export const LoginForm: FC<PropsType> = (props) => {
                        {...register("password", {
                            required: "enter your password",
                            minLength: {
-                               value: 5,
-                               message: 'min 5 symbols'
+                               value: 3,
+                               message: 'min 3 symbols'
                            }
                        })}/>
                 <div>

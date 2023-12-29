@@ -1,11 +1,11 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
-import MyPostsStyle from "./MyPosts.module.css";
+import s from "./MyPosts.module.css";
 
 export const AddPostForm = (props) => {
     const {
         register,
-        formState: {errors, isValid},
+        formState: {errors, isValid, isDirty},
         handleSubmit,
         reset
     } = useForm({
@@ -18,19 +18,25 @@ export const AddPostForm = (props) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={MyPostsStyle.addPost}>
-            <textarea placeholder="Add your text"
-                {...register("newPostText", {
-                    required: "Add your text",
-                    minLength: {
-                        value: 5,
-                        message: 'min 5 symbols'
-                    }
-                })}/>
+        <form onSubmit={handleSubmit(onSubmit)} className={s.addPost}>
             <div>
-                {errors?.textarea && <p>{errors?.textarea?.message || "Error!"}</p>}
+                  <textarea placeholder="Add your text"
+                            {...register("newPostText", {
+                                minLength: {
+                                    value: 5,
+                                    message: 'min 5 symbols'
+                                }
+                            })}/>
+                <div className={s.addPostButton}>
+                    {errors?.newPostText && <p>{errors?.newPostText?.message || "Error!"}</p>}
+                    <button type="submit" disabled={!isValid || !isDirty}>Add post</button>
+                </div>
+
             </div>
-            <button type="submit" disabled={!isValid}>Add post</button>
+            <div>
+
+            </div>
+
         </form>
     )
 }

@@ -36,7 +36,7 @@ const UsersContainer: FC<PropsType> = (props) => {
                 <div className={s.userItem} key={u.id}>
                     <span className={s.follow}>
                         <div>
-                            <NavLink to={'/profile/' + u.id}>
+                            <NavLink to={'/' + u.id}>
                                 <img src={u.photos.small != null ? u.photos.small : avatar}
                                      alt=''
                                      className={s.userPhoto}/>

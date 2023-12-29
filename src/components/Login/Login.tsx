@@ -19,7 +19,7 @@ type PropsType = MapStateToPropsType & MapDispatchToPropsType
 const Login: FC<PropsType> = (props) => {
 
     if(props.isAuth) {
-        return <Navigate to={"/profile"} />
+        return <Navigate to={"/"} />
     }
 
     return (

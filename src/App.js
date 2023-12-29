@@ -38,10 +38,10 @@ class App extends React.Component {
                 <div className='app-wrapper-content'>
                     <Suspense fallback={<div><Preloader/></div>}>
                         <Routes>
-                            <Route path="*" element={<Navigate to={"/"}/>}/>
-                            <Route path="/" element={<Navigate to={"profile/"}/>}/>
-                            <Route path="/profile/:userId?" element={<ProfileContainer/>}/>
-                            {/*<Route path="/profile/*" element={<ProfileContainer/>}/>*/}
+                            {/*<Route path="*" element={<Navigate to={"/"}/>}/>*/}
+                            {/*<Route path="/" element={<Navigate to={"profile/"}/>}/>*/}
+                            <Route path="/:userId?" element={<ProfileContainer/>}/>
+                            <Route path="/*" element={<ProfileContainer/>}/>
                             <Route path="/dialogs/*" element={<DialogsContainer/>}/>
                             <Route path="/login/*" element={<Login/>}/>
                             <Route path="/news/*" element={<News/>}/>
