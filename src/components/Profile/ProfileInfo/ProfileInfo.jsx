@@ -10,14 +10,10 @@ import {MainInfoEditForm} from "./Info/Main info/MainInfoEditForm";
 
 const ProfileInfo = (props) => {
 
-    const [mainInfo, setMainInfo] = useState(true);
-    const [aboutMe, setAboutMe] = useState(false);
-    const [contacts, setContacts] = useState(false);
+    const [info, setInfo] = useState({mainInfo: true, aboutMe: false, contacts: false})
 
-    const setInfoDisplay = (mainInfo, AboutMe, Contacts) => {
-        setMainInfo(mainInfo);
-        setAboutMe(AboutMe);
-        setContacts(Contacts)
+    const setInfoDisplay = (mainInfo, aboutMe, contacts) => {
+        setInfo({mainInfo, aboutMe, contacts})
     }
 
     const [editMode, setEditMode] = useState(false);
@@ -67,17 +63,17 @@ const ProfileInfo = (props) => {
                         <button onClick={() => {
                             setInfoDisplay(true, false, false)
                         }}
-                                className={mainInfo ? s.active : undefined}>Main info
+                                className={info.mainInfo ? s.active : undefined}>Main info
                         </button>
                         <button onClick={() => {
                             setInfoDisplay(false, true, false)
                         }}
-                                className={aboutMe ? s.active : undefined}>About me
+                                className={info.aboutMe ? s.active : undefined}>About me
                         </button>
                         <button onClick={() => {
                             setInfoDisplay(false, false, true)
                         }}
-                                className={contacts ? s.active : undefined}>Contacts
+                                className={info.contacts ? s.active : undefined}>Contacts
                         </button>
                         {props.isOwner && <div>
                             <button onClick={aEditMode}
@@ -89,25 +85,25 @@ const ProfileInfo = (props) => {
 
                     {editMode
                         ? <MainInfoEditForm
-                            mainInfo={mainInfo}
-                            contacts={contacts}
-                            aboutMe={aboutMe}
+                            mainInfo={info.mainInfo}
+                            contacts={info.contacts}
+                            aboutMe={info.aboutMe}
                             onSubmit={onSubmit}
                             aEditMode={aEditMode}
                             profile={props.profile}
                             dEditMode={dEditMode}
                         />
                         : <div>
-                            {mainInfo && <DescriptionInfo
+                            {info.mainInfo && <DescriptionInfo
                                 fullName={props.profile.fullName}
                                 lookingForAJob={props.profile.lookingForAJob}
                                 lookingForAJobDescription={props.profile.lookingForAJobDescription}
                             />}
-                            {contacts && <Contacts
+                            {info.contacts && <Contacts
                                 contacts={props.profile.contacts}
                                 isOwner={props.isOwner}
                             />}
-                            {aboutMe && <AboutMe
+                            {info.aboutMe && <AboutMe
                                 aboutMe={props.profile.aboutMe}
                                 isOwner={props.isOwner}/>}
                         </div>

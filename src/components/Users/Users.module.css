@@ -2,8 +2,8 @@
 .userItem {
     display: grid;
     grid-template-areas:
-    "f i";
-    grid-template-columns: 130px auto;
+    "f i d";
+    grid-template-columns: 100px 200px 320px;
 
     border-radius: 30px;
     box-shadow: inset 0 0 10px 3px rgba(0, 0, 0, 0.62), 0 0 3px rgba(1, 255, 81, 0.25);
@@ -19,39 +19,46 @@
 }
 
 .userPhoto {
-    margin-left: 5px;
-    width: 45px;
+    width: 50px;
     border-radius: 5px;
 }
 
 .follow {
+    flex-direction: column;
+    display: flex ;
     grid-area: f;
 }
 
+.follow a{
+    margin: 0 auto;
+}
+
 .followed {
+    margin-top: 10px;
+    display: inline-block;
+    height: 20px;
     font-size: 12px;
-    margin-top: 5px;
+    /*margin: 5px auto;*/
     cursor: pointer;
     color: azure;
     border: none;
     background: none;
     font-weight: bold;
     text-shadow: 2px 2px 4px black;
-    border-radius: 3px;
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.62);
-    padding: 7px;
+    /*border-radius: 3px;*/
+    /*box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.62);*/
+
 }
 
-.followed_follow {
+.followed_unfollow {
     text-shadow: 2px 2px 4px black;
-    margin-left: 5px;
-    box-shadow:  0 0 15px rgba(0, 0, 0, 0.62);
+
 }
 
 .followed:disabled {
     text-shadow: none;
     box-shadow: none;
-    color: rgba(0, 0, 0, 0.62);
+    color: rgba(0, 0, 0, 0.26);
 
 }
 .followed:disabled:hover {
@@ -67,6 +74,33 @@
 
 .info {
     grid-area: i;
+    padding-left: 20px;
+    font-size: 14px;
+
+}
+
+.stateFollow {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    background: rgba(85, 255, 0, 0.53);
+    border-radius: 10px;
+    margin-left: 10px;
+    box-shadow: 0 0 5px rgb(127, 255, 0);
+}
+
+.stateUnfollow {
+    background: rgba(255, 0, 21, 0.63);
+    box-shadow: 0 0 5px rgb(255, 0, 0);
+}
+
+.description {
+    grid-area: d;
+    font-size: 14px;
+}
+
+.info span, .description span{
+    font-weight: bold;
 }
 
 .showMore {

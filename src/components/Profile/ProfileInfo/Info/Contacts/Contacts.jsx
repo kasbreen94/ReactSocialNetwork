@@ -8,7 +8,7 @@ const Contacts = (props) => {
         <div className={s.contacts}>
                 <div>
                     {Object.entries(props.contacts).filter(([c, v]) => c && v !== null && c && v !== "").map(([key, value]) =>
-                        <div key={key.id} >
+                        <div key={value.id} >
                             {key} :
                             <a href={value}>{value}</a>
                         </div>)}

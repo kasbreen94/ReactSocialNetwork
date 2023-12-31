@@ -4,7 +4,7 @@
     /*border-radius: 5px;*/
     height: 210px;
     /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
-    overflow: auto;
+    /*overflow: auto;*/
 }
 
 .friend {
@@ -28,7 +28,7 @@
 
 .item {
     font-weight: 600;
-    margin-top: 30px;
+    margin-top: 60px;
     margin-left: 8px;
     margin-right: 70px;
     color: azure;

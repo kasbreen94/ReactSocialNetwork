@@ -2,14 +2,9 @@ import React from "react";
 import PostStyle from './Post.module.css'
 import like from '../../../../assets/images/like2.svg'
 import avatar from "../../../../assets/images/avatar.svg";
-import MyPostsStyle from "../MyPosts.module.css";
-import {AddPostForm} from "../AddPostFormHook";
 
 const Post = (props) => {
 
-    // let onDeletePost = (postId) => {
-    //     props.deletePost(postId.deletePost)
-    // }
     return (
         <>
         {[...props.posts].reverse().map(posts =>

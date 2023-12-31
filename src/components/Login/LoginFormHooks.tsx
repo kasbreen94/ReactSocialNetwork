@@ -19,7 +19,6 @@ export const LoginForm: FC<PropsType> = (props) => {
         register,
         formState: {errors, isValid},
         handleSubmit,
-        reset
     } = useForm<LoginFormValueType>({
         mode: "onBlur"
     });

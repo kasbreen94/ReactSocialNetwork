@@ -5,16 +5,20 @@ import {NavLink} from "react-router-dom";
 const Navbar = (props) => {
 
     return <nav className={s.nav}>
+        {/*<div className={`${s.line} ${s.lineUp}`}></div>*/}
         <ul>
+            <div className={`${s.line} ${s.lineUp}`}></div>
             {props.navbar.map(nav =>
                 <li className={s.item} key={nav.id}>
                     <img src={nav.icon} alt=""/>
                     <NavLink
                         to={"/" + nav.address}
-                        className={({isActive}) => isActive ? s.active : s.item}>
+                        className={({isActive}) => isActive ? s.active : s.inactive}
+                    >
                         {nav.select}</NavLink></li>)}
+            <div className={s.line}></div>
         </ul>
-        <div className={s.line}></div>
+        {/*<div className={s.line}></div>*/}
     </nav>
 }
 

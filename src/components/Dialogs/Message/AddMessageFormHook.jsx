@@ -24,7 +24,9 @@ export const AddMessageForm = (props) => {
                     minLength: {
                         value: 5,
                         message: 'min 5 symbols'
-                    }
+
+                    },
+                    maxLength: 300
                 })}/>
             <div>
                 {errors?.textarea && <p>{errors?.textarea?.message || "Error!"}</p>}

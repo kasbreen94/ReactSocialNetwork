@@ -44,7 +44,6 @@ const ProfileContainer: FC<PropsType> = (props) => {
         if (!userId) {
             userId = props.authUserId;
         }
-
         if (typeof userId === "number") {
             props.getUserProfile(userId)
             props.getStatus(userId)

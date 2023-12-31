@@ -2,14 +2,6 @@
 
 }
 
-/*.blockName {*/
-/*    display: block;*/
-/*    margin: 20px auto;*/
-/*    width: 100px;*/
-/*    font-weight: 700;*/
-/*    font-size: 18px;*/
-/*}*/
-
 .profileLogo img{
     border-radius: 5px;
     width: 100%;
@@ -81,7 +73,6 @@ margin: 0 auto;
     gap: 35px;
     text-align: center;
     height: 25px;
-
     margin: 0 auto;
 }
 
@@ -179,20 +170,25 @@ margin: 0 auto;
 .statusEdit {
     display: inline-block;
     cursor: pointer;
+    font-size: 14px;
     /*background-color: rgba(1, 255, 81, 0.2);*/
     /*border-radius: 5px;*/
     /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
     padding: 5px;
+    margin-bottom: 15px;
 }
 
 .statusInput {
     border: none;
     outline: none;
     color: azure;
+    font-size: 13px;
     /*background-color: rgba(1, 255, 81, 0.2);*/
     /*border-radius: 5px;*/
     /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);*/
     padding: 5px;
     background: none;
+    width: 550px;
+    margin-bottom: 17px;
 }
 
