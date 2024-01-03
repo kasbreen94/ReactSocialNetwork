@@ -1,13 +1,18 @@
 // @ts-ignore
 import avatar from "../assets/images/avatar.svg";
+import {InferActionsTypes} from "./redux_store";
+import {actions} from "./profileReducer";
 
-type NavbarType = {
+export type InitialStateType = typeof initialState
+type ActionsTypes = InferActionsTypes<typeof actions>
+
+export type NavbarType = {
     id: number
     select: string
     address: string
     icon: string | null
 }
-type FriendsType = {
+export type FriendsType = {
     id: number
     avatar: string | null
     name: string
@@ -33,10 +38,7 @@ let initialState = {
     ] as Array<FriendsType>
 }
 
-export type InitialStateType = typeof initialState
-
-const sidebarReducer = (state = initialState, action: any): InitialStateType => {
-
+const sidebarReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     return state;
 }
 

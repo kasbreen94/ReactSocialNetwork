@@ -1,10 +1,15 @@
-import React from "react";
+import React, {FC} from "react";
 import PostStyle from './Post.module.css'
 import like from '../../../../assets/images/like2.svg'
 import avatar from "../../../../assets/images/avatar.svg";
+import {PostType} from "../../../../redux/types/types";
 
-const Post = (props) => {
+type PropsTypes = {
+    posts: PostType[]
+    deletePost: (postId: number) => void
+}
 
+const Post: FC<PropsTypes> = (props) => {
     return (
         <>
         {[...props.posts].reverse().map(posts =>

@@ -1,28 +1,23 @@
 // @ts-ignore
 import avatar from "../assets/images/avatar.svg";
+import {BaseThunkType, InferActionsTypes} from "./redux_store";
 
-const ADD_MESSAGE = 'dialogs/ADD_MESSAGE'
+export type initialStateType = typeof initialState
+type ActionsTypes = InferActionsTypes<typeof actions>
 
-type MessageType = {
+export type MessageType = {
+    id: number
+    message: string
+}
+
+export type DialogType = {
     id: number
     name: string
     avatar: string | null
 }
 
-type DialogType = {
-    id: number
-    message: string
-}
-
 let initialState = {
-    messages: [
-        {id: 1, message: 'tincidunt nunc pulvinar sapien et'},
-        {id: 2, message: 'tellus molestie nunc non blandit'},
-        {id: 3, message: 'donec ac odio tempor orci'},
-        {id: 4, message: 'lacus sed viverra tellus in'},
-        {id: 5, message: 'mauris a diam maecenas sed'},
-        {id: 6, message: 'euismod quis viverra nibh cras'}
-    ] as Array<DialogType>,
+    messages: [] as Array<MessageType>,
     dialogs: [
         {id: 1, name: 'Dmitriy', avatar: avatar},
         {id: 2, name: 'Andrey', avatar: avatar},
@@ -30,18 +25,16 @@ let initialState = {
         {id: 4, name: 'Sasha', avatar: avatar},
         {id: 5, name: 'Viktor', avatar: avatar},
         {id: 6, name: 'Valera', avatar: avatar}
-    ] as Array<MessageType>
+    ] as Array<DialogType>
 }
 
-export type initialStateType = typeof initialState
-
-const dialogsReducer = (state = initialState, action: any): initialStateType => {
+const dialogsReducer = (state = initialState, action: ActionsTypes): initialStateType => {
 
     switch (action.type) {
-        case ADD_MESSAGE: {
+        case 'SN/DIALOGS/ADD_MESSAGE': {
             return {
                 ...state,
-                messages: [...state.messages, {id: 7, message: action.newMessage}]
+                messages: [...state.messages, {id: state.messages.length + 1, message: action.newMessage}]
             };
         }
         default:
@@ -49,11 +42,8 @@ const dialogsReducer = (state = initialState, action: any): initialStateType => 
     }
 }
 
-type AddMessageActionType = {
-    type: typeof ADD_MESSAGE
-    newMessage: string
+export const actions = {
+    addMessage: (newMessage: string) => ({type: 'SN/DIALOGS/ADD_MESSAGE', newMessage} as const)
 }
-
-export const addMessage = (newMessage: string): AddMessageActionType => ({type: ADD_MESSAGE, newMessage})
 
 export default dialogsReducer;

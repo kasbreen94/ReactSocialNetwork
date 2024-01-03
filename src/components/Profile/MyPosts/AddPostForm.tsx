@@ -1,19 +1,27 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {useForm} from "react-hook-form";
 import s from "./MyPosts.module.css";
 
-export const AddPostForm = (props) => {
+type PropsTypes = {
+    addPost:(newPostText: string) => void
+}
+
+type NewPostFormType = {
+    newPostText: string
+}
+
+export const AddPostForm: FC<PropsTypes> = (props) => {
     const {
         register,
         formState: {errors, isValid, isDirty},
         handleSubmit,
         reset
-    } = useForm({
+    } = useForm<NewPostFormType>({
         mode: "onBlur"
     });
 
-    const onSubmit = (data) => {
-        props.onSubmit(data)
+    const onSubmit = (data: NewPostFormType) => {
+        props.addPost(data.newPostText)
         reset();
     }
 
@@ -31,12 +39,9 @@ export const AddPostForm = (props) => {
                     {errors?.newPostText && <p>{errors?.newPostText?.message || "Error!"}</p>}
                     <button type="submit" disabled={!isValid || !isDirty}>Add post</button>
                 </div>
-
             </div>
             <div>
-
             </div>
-
         </form>
     )
 }

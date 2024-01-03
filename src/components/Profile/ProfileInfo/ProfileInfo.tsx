@@ -1,18 +1,25 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, FC, useState} from "react";
 import s from './ProfileInfo.module.css'
 import Preloader from "../../common/preloader/preloader";
 import avatar from "../../../assets/images/avatar.svg";
-import ProfileStatusHooks from "./ProfileStatusHooks";
-import DescriptionInfo from "./Info/Main info/DescriptionInfo";
-import Contacts from "./Info/Contacts/Contacts";
-import AboutMe from "./Info/AboutMe";
-import {MainInfoEditForm} from "./Info/Main info/MainInfoEditForm";
+import ProfileStatus from "./ProfileStatus";
+import {MainInfoEditForm} from "./MainInfoEditForm";
+import {ProfileType} from "../../../redux/types/types";
 
-const ProfileInfo = (props) => {
+type PropsTypes = {
+    isOwner: boolean
+    profile: ProfileType | null
+    status: string
+    updateStatus: (status: string) => void
+    updPhoto: (file: File) => void
+    updateInfo: (profile: ProfileType) => void
+}
+
+const ProfileInfo: FC<PropsTypes> = (props) => {
 
     const [info, setInfo] = useState({mainInfo: true, aboutMe: false, contacts: false})
 
-    const setInfoDisplay = (mainInfo, aboutMe, contacts) => {
+    const setInfoDisplay = (mainInfo: boolean, aboutMe: boolean, contacts: boolean) => {
         setInfo({mainInfo, aboutMe, contacts})
     }
 
@@ -26,13 +33,13 @@ const ProfileInfo = (props) => {
         setEditMode(false)
     }
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: ProfileType) => {
         props.updateInfo(data)
         setEditMode(false)
     }
 
-    const mainPhotoSelected = (e) => {
-        if (e.target.files.length) {
+    const mainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length) {
             props.updPhoto(e.target.files[0])
         }
     }
@@ -44,7 +51,7 @@ const ProfileInfo = (props) => {
     return (
         <div className={s.info}>
             <div className={s.profileInfo}>
-                <ProfileStatusHooks isOwner={props.isOwner} status={props.status} updateStatus={props.updateStatus}/>
+                <ProfileStatus isOwner={props.isOwner} status={props.status} updateStatus={props.updateStatus}/>
                 <div className={s.Photo}>
                     <div>
                         <img src={props.profile.photos.large || avatar} alt=''/>
@@ -85,27 +92,40 @@ const ProfileInfo = (props) => {
 
                     {editMode
                         ? <MainInfoEditForm
-                            mainInfo={info.mainInfo}
-                            contacts={info.contacts}
-                            aboutMe={info.aboutMe}
+                            info={info}
                             onSubmit={onSubmit}
-                            aEditMode={aEditMode}
                             profile={props.profile}
                             dEditMode={dEditMode}
                         />
                         : <div>
-                            {info.mainInfo && <DescriptionInfo
-                                fullName={props.profile.fullName}
-                                lookingForAJob={props.profile.lookingForAJob}
-                                lookingForAJobDescription={props.profile.lookingForAJobDescription}
-                            />}
-                            {info.contacts && <Contacts
-                                contacts={props.profile.contacts}
-                                isOwner={props.isOwner}
-                            />}
-                            {info.aboutMe && <AboutMe
-                                aboutMe={props.profile.aboutMe}
-                                isOwner={props.isOwner}/>}
+                            {info.mainInfo && <div className={s.descriptionInfo}>
+                                <div className={s.descriptionItem}>
+                                    <span>Name:</span>
+                                    {props.profile.fullName}
+                                </div>
+                                <div className={s.descriptionItem}>
+                                    <span>Looking for a job:</span>
+                                    {props.profile.lookingForAJob === true ? 'Ищу работу' : 'Не ищу работу'}
+                                </div>
+                                <div className={s.descriptionItem}>
+                                    <span>My professional skills:</span>
+                                    {props.profile.lookingForAJobDescription}
+                                </div>
+                            </div>}
+
+                            {info.contacts && <div className={s.contacts}>
+                                {Object.entries(props.profile.contacts!)
+                                    .filter(([c, v]) => c && v !== null && c && v !== "")
+                                    .map(([key, value]) =>
+                                        <div key={value} >
+                                            {key} :
+                                            <a href={value}>{value}</a>
+                                        </div>)}
+                            </div>}
+
+                            {info.aboutMe &&  <div className={s.aboutMe}>
+                                {props.profile.aboutMe}
+                            </div>}
                         </div>
                     }
                 </div>

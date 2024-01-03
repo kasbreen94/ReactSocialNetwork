@@ -1,68 +1,73 @@
-import React, {FC,  useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {followed, requestUsers} from "../../redux/usersReducer";
 import s from "./Users.module.css";
-import {getFollowingInProgress, getUsers,} from "../../redux/users_selectors";
 import {NavLink} from "react-router-dom";
 import avatar from "../../assets/images/avatar.svg";
 import {UsersType} from "../../redux/types/types";
 import {AppStateType} from "../../redux/redux_store";
-import {usersAPI} from "../../api/UsersAPI";
-
 
 type MapStateToPropsType = {
-    count: number
     loading: boolean
-    isFetching: boolean
-    followingInProgress: Array<number>
+    users: UsersType[]
+    followingId: number | null
+    totalCount: number
 }
 
 type MapDispatchToPropsType = {
-    followed: (id: number) => void
-    requestUsers(count: number): void
+    followed: (userId: number) => void
+    requestUsers(page: number): void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
 const UsersContainer: FC<PropsType> = (props: PropsType) => {
 
-    const [data, setData] = useState<UsersType[]>([])
-    const [count, setCount] = useState(5)
+    const [count, setCount] = useState<number>(5)
+    const [page, setPage] = useState<number>(1)
+    const totalPage = Math.ceil(props.totalCount / 100)
 
-    const getUsers = async (count: number) => {
-        const res: any = await usersAPI.getUsers(count)
-        setData(res.data.items)
-    }
-
-    const [followed, setFollowed] = useState<boolean>(false)
-    const [expectation, setExpectation] = useState({userId: null as null | number})
-
-    const followedUser = async (userId: number) => {
-        setExpectation({userId: userId})
-        let res: any = await usersAPI.getFollowed(userId)
-        setFollowed(res.data)
-        {res.data === false ? res = await usersAPI.follow(userId) : res = await usersAPI.unfollow(userId)}
-        {res.data.resultCode === 0 && setFollowed(!followed)}
-        setExpectation({userId: null})
+    const getPage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const n = Number(e.target.value)
+        setPage(n)
     }
 
     useEffect(() => {
-        getUsers(count)
-    }, [count, followed]);
+      props.requestUsers(page)
+    }, [page]);
 
     return (
         <div className={s.users}>
-            {data.map((u) =>
-                <div className={s.userItem} key={u.id}>
+            <div className={s.infoPage}>
+                <span>Total users: {props.totalCount}</span>
+                <span>Total pages: {totalPage}</span>
+                <span>Total users per page: 100</span>
+            </div>
+            <div className={s.pagination}>
+                 <button
+                    onClick={() => setPage(page - 1)} className={s.showMore} disabled={page === 1}>
+                    PrevPage
+                </button>
+                <label>
+                    Page:
+                    <input className={s.numberPage} value={page} onChange={getPage}/>
+                </label>
+                <button
+                    onClick={() => {setPage(page + 1); setCount(5)}} className={s.showMore} disabled={props.loading}>
+                    NextPage
+                </button>
+            </div>
+            {props.users.slice(0, count).map((u, i) =>
+                <div className={s.userItem} key={i}>
                     <span className={s.follow}>
                              <NavLink to={'/' + u.id}>
-                                <img src={u.photos.small != null ? u.photos.small : avatar}
+                                <img src={u.photos.small ? u.photos.small : avatar}
                                      alt=''
                                      className={s.userPhoto}/>
                              </NavLink>
                                 <button className={`${s.followed} ${u.followed && s.followed_unfollow}`}
-                                        disabled={expectation.userId === u.id}
-                                        onClick={() => followedUser(u.id)}>
+                                        disabled={props.followingId === u.id}
+                                        onClick={() => props.followed(u.id)}>
                                          {u.followed ? "Unfollow" : "Follow"}
                                  </button>
                      </span>
@@ -80,11 +85,25 @@ const UsersContainer: FC<PropsType> = (props: PropsType) => {
                         <span>Status: </span>{u.status}</div>}
                 </div>
             )}
-            <div>
-                <button
-                    onClick={() => setCount(count => count + 6)} className={s.showMore} disabled={props.loading}>
+            <div >
+                {count < 100 && <button
+                    onClick={() => setCount(count + 5)} className={s.showMore} disabled={props.loading}>
                     {props.loading ? "Loading..." : "Load More"}
-                </button>
+                </button>}
+                {count === 100 &&
+                    <div className={s.pagination}>
+                        <button
+                            onClick={() => {setPage(page - 1);setCount(5)}}
+                            className={s.showMore} disabled={page === 1}>
+                            PrevPage
+                        </button>
+                        <input className={s.showMore} value={page} onChange={getPage}/>
+                        <button
+                            onClick={() => {setPage(page + 1); setCount(5)}}
+                            className={s.showMore} disabled={props.loading}>
+                            NextPage
+                        </button>
+                    </div>}
             </div>
         </div>
     )
@@ -92,13 +111,12 @@ const UsersContainer: FC<PropsType> = (props: PropsType) => {
 
 let mapStateToProps = (state: AppStateType) => {
     return {
-        count: state.usersPage.count,
         loading: state.usersPage.loading,
-        isFetching: state.usersPage.isFetching,
-        users: getUsers(state),
-        followingInProgress: getFollowingInProgress(state)
+        users: state.usersPage.users,
+        followingId: state.usersPage.followingId,
+        totalCount: state.usersPage.totalCount,
     }
 }
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, null, AppStateType>(mapStateToProps,
-    {followed, requestUsers})(UsersContainer);
+export default connect(mapStateToProps,
+    {followed, requestUsers})(UsersContainer) as React.ComponentType

@@ -1,16 +1,21 @@
-import React from "react";
+import React, {FC} from "react";
+import avatar from "../../../assets/images/avatar.svg";
 import s from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
+import {NavbarType} from "../../../redux/sidebarReducer";
 
-const Navbar = (props) => {
+type PropsTypes = {
+    navbar: NavbarType[]
+}
+
+const Navbar: FC<PropsTypes> = (props) => {
 
     return <nav className={s.nav}>
-        {/*<div className={`${s.line} ${s.lineUp}`}></div>*/}
         <ul>
             <div className={`${s.line} ${s.lineUp}`}></div>
             {props.navbar.map(nav =>
                 <li className={s.item} key={nav.id}>
-                    <img src={nav.icon} alt=""/>
+                    <img src={nav.icon ? nav.icon : avatar} alt=""/>
                     <NavLink
                         to={"/" + nav.address}
                         className={({isActive}) => isActive ? s.active : s.inactive}
@@ -18,7 +23,6 @@ const Navbar = (props) => {
                         {nav.select}</NavLink></li>)}
             <div className={s.line}></div>
         </ul>
-        {/*<div className={s.line}></div>*/}
     </nav>
 }
 

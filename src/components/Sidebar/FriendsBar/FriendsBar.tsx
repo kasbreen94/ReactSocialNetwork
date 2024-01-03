@@ -1,8 +1,14 @@
-import React from "react";
+import React, {FC} from "react";
+import avatar from "../../../assets/images/avatar.svg";
 import friendsBarStyle from './FriendsBar.module.css'
 import {NavLink} from "react-router-dom";
+import {FriendsType} from "../../../redux/sidebarReducer";
 
-const FriendsBar = (props) => {
+type PropsTypes = {
+    friends: FriendsType[]
+}
+
+const FriendsBar: FC<PropsTypes> = (props) => {
 
     return (
         <nav className={friendsBarStyle.friends}>
@@ -11,10 +17,9 @@ const FriendsBar = (props) => {
                          className={({isActive}) => isActive ? friendsBarStyle.active : friendsBarStyle.item}>Friends</NavLink>
                 <span>Online</span>
             </div>
-            {/*<div className={friendsBarStyle.line}></div>*/}
             {props.friends.map(friend =>
                 <div className={friendsBarStyle.friend} key={friend.id}>
-                    <img src={friend.avatar} alt=""/>
+                    <img src={friend.avatar ? friend.avatar : avatar } alt=""/>
                     <span>{friend.name}</span>
                 </div>
             )}

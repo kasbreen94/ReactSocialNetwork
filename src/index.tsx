@@ -8,7 +8,7 @@ import {Provider} from "react-redux";
 import {BrowserRouter, HashRouter} from "react-router-dom";
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as Element);
 
 root.render(
     <HashRouter>

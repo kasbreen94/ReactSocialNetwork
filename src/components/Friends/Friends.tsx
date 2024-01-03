@@ -1,7 +1,6 @@
 import React from "react";
 
-
-const Friends = (props) => {
+const Friends = () => {
     return <div>
         friends
     </div>

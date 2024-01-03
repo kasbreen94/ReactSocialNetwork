@@ -1,3 +1,22 @@
+.pagination {
+    display: flex;
+}
+
+.pagination input {
+    width: 30px;
+}
+
+.infoPage {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.pagination div {
+    display: inline-block;
+    width: 40px;
+}
 
 .userItem {
     display: grid;
@@ -104,12 +123,27 @@
 }
 
 .showMore {
+    cursor: pointer;
+    text-align: center;
+    height: 25px;
+    width: 100px;
     display: block;
-    margin: 15px 300px;
     color: azure;
     border: none;
 background: none;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
-    border-radius: 3px;
-    padding: 7px 10px;
+    border-radius: 5px;
+    padding: 3px 10px;
+    margin: 10px auto 10px;
+}
+
+.numberPage {
+    color: azure;
+    border: none;
+    background: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
+    border-radius: 5px;
+    padding: 3px 10px;
+    margin: 10px 5px;
+    text-align: center;
 }

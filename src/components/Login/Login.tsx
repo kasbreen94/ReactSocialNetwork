@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {connect} from "react-redux";
 import {logIn} from "../../redux/auth_Reducer";
 import {Navigate} from "react-router-dom";
-import {LoginForm} from "./LoginFormHooks";
+import {LoginForm} from "./LoginForm";
 import {AppStateType} from "../../redux/redux_store";
 
 type MapStateToPropsType = {
@@ -28,8 +28,6 @@ const Login: FC<PropsType> = (props) => {
         </div>
     )
 }
-
-
 
 const mapStateToProps = (state: AppStateType) => ({
     isAuth: state.auth.isAuth,

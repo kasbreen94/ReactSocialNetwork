@@ -1,17 +1,13 @@
-import React, {FC, useEffect, useRef} from "react";
-import Profile from "./Profile";
+import React, {FC, useEffect} from "react";
 import {connect} from "react-redux";
-import {
-    addPost, deletePost,
-    getStatus,
-    getUserProfile, updateInfo,
-    updateStatus,
-    updPhoto
-} from "../../redux/profileReducer";
+import {actions, getStatus, getUserProfile, updateInfo, updateStatus, updPhoto} from "../../redux/profileReducer";
 import {compose} from "redux";
-import {PostType, ProfileType} from "../../redux/types/types";
+import {ContactsType, PostType, ProfileType} from "../../redux/types/types";
 import {AppStateType} from "../../redux/redux_store";
 import {useParams} from "react-router-dom";
+import ProfileStyle from "./Profile.module.css";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import MyPosts from "./MyPosts/MyPosts";
 
 type MapStateToPropsType = {
     posts: Array<PostType>
@@ -19,7 +15,6 @@ type MapStateToPropsType = {
     status: string
     authUserId: number | null
     isAuth: boolean
-
 }
 
 type MapDispatchToPropsType = {
@@ -28,7 +23,7 @@ type MapDispatchToPropsType = {
     updateStatus: (status: string) => void
     addPost:(newPostText: string) => void
     deletePost: (postId: number) => void
-    updPhoto: (file: any) => void
+    updPhoto: (file: File) => void
     updateInfo: (profile: ProfileType) => void
 }
 
@@ -55,18 +50,18 @@ const ProfileContainer: FC<PropsType> = (props) => {
     }, [userId]);
 
     return (
-
-        <Profile {...props}
-                 isOwner={!userId}
-                 profile={props.profile}
-                 status={props.status}
-                 updateStatus={props.updateStatus}
-                 addPost={props.addPost}
-                 deletePost={props.deletePost}
-                 posts={props.posts}
-                 updPhoto={props.updPhoto}
-                 updateInfo={props.updateInfo}
-        />
+        <div className={ProfileStyle.profileWrapper}>
+            <ProfileInfo
+                isOwner={!userId}
+                profile={props.profile}
+                status={props.status}
+                updateStatus={props.updateStatus}
+                updPhoto={props.updPhoto}
+                updateInfo={props.updateInfo}
+            />
+            <MyPosts  posts={props.posts} addPost={props.addPost} deletePost={props.deletePost}
+            />
+        </div>
     )
 }
 
@@ -78,7 +73,9 @@ let mapStateToProps = (state: AppStateType) => ({
     isAuth: state.auth.isAuth
 });
 
+const addPost = actions.addPost
+const deletePost = actions.deletePost
+
 export default compose(
-    // withRouter,
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, addPost, deletePost, updPhoto, updateInfo})
+    connect(mapStateToProps, { addPost, deletePost, getUserProfile, getStatus, updateStatus, updPhoto, updateInfo})
 )(ProfileContainer);

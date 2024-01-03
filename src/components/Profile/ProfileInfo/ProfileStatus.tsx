@@ -8,7 +8,7 @@ type PropsType = {
     updateStatus(status: string ): void;
 }
 
-const ProfileStatusHooks: FC<PropsType> = (props) => {
+const ProfileStatus: FC<PropsType> = (props) => {
 
     const [editMode, setEditMode] = useState(false);
     const [status, setStatus] = useState(props.status)
@@ -51,4 +51,4 @@ const ProfileStatusHooks: FC<PropsType> = (props) => {
     )
 }
 
-export default ProfileStatusHooks;
+export default ProfileStatus;

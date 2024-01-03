@@ -1,18 +1,30 @@
-import React from 'react';
-import {useForm} from "react-hook-form";
-import s from "./../../../Profile.module.css"
+import React, {FC} from 'react';
+import {SubmitHandler, useForm} from "react-hook-form";
+import s from "../Profile.module.css"
+import {ProfileType} from "../../../redux/types/types";
 
+type PropsType = {
+    info: {
+        mainInfo: boolean
+        contacts: boolean
+        aboutMe: boolean
+    }
+    profile: ProfileType
+    onSubmit: (data: ProfileType) => void
+    dEditMode: React.MouseEventHandler<HTMLDivElement>
+}
 
-export const MainInfoEditForm = (props) => {
+export const MainInfoEditForm: FC<PropsType> = (props) => {
 
     const {
         register,
         formState: {isValid},
         handleSubmit,
-    } = useForm({
+    } = useForm<ProfileType>({
         mode: "onBlur",
         values: props.profile
     });
+
 
     return (
         <div className={s.profileEditFormWrapper}>
@@ -20,7 +32,7 @@ export const MainInfoEditForm = (props) => {
                 <button type="submit" disabled={!isValid} className={s.save}>Save</button>
                 <div onClick={props.dEditMode} className={s.close}>Close</div>
                 <div className={s.line}></div>
-                {props.mainInfo && <div>
+                {props.info.mainInfo && <div>
                     <div>
                         Name:
                         <input placeholder="enter your name"
@@ -38,7 +50,7 @@ export const MainInfoEditForm = (props) => {
                     </div>
 
                 </div>}
-                {props.aboutMe && <div >
+                {props.info.aboutMe && <div >
                     About Me:
                     <textarea placeholder="enter your email" maxLength={300}
                            {...register("aboutMe", {
@@ -46,13 +58,13 @@ export const MainInfoEditForm = (props) => {
                            )}/>
                 </div>}
 
-                {props.contacts && <div>
-                    {Object.keys(props.profile.contacts).map(c =>
-                        <div key={c.key}>
+                {props.info.contacts && <div>
+                    {Object.keys(props.profile.contacts!).map(c =>
+                        <div key={c}>
                             {c}:
                             <input placeholder="enter your text" className={s.contacts}
+                                // @ts-ignore
                                    {...register(`contacts.${c}`, {
-
                                    })}/>
                         </div>)}
                 </div>}

@@ -1,24 +1,21 @@
-import React from "react";
+import React, {FC} from "react";
 import MyPostsStyle from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {AddPostForm} from "./AddPostFormHook";
+import {AddPostForm} from "./AddPostForm";
+import {PostType} from "../../../redux/types/types";
 
-const MyPosts = (props) => {
+type PropsTypes = {
+    addPost:(newPostText: string) => void
+    posts: PostType[]
+    deletePost: (postId: number) => void
+}
 
-    console.log("RENDER")
-
-    let addNewPost = (values) => {
-        props.addPost(values.newPostText)
-    }
-
-
+const MyPosts: FC<PropsTypes> = (props) => {
 
     return (
         <div className={MyPostsStyle.postsWrapper}>
-            {/*<span>Posts</span>*/}
             <div className={MyPostsStyle.posts}>
-                <AddPostForm onSubmit={addNewPost}/>
-
+                <AddPostForm addPost={props.addPost}/>
                 <div>
                     <Post posts={props.posts} deletePost={props.deletePost} />
                 </div>
