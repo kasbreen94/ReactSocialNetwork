@@ -1,81 +1,44 @@
-import React, {FC, useEffect} from "react";
-import {connect} from "react-redux";
-import {actions, getStatus, getUserProfile, updateInfo, updateStatus, updPhoto} from "../../redux/profileReducer";
-import {compose} from "redux";
-import {ContactsType, PostType, ProfileType} from "../../redux/types/types";
-import {AppStateType} from "../../redux/redux_store";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {requestStatus, requestUserProfile} from "../../redux/profileReducer";
 import {useParams} from "react-router-dom";
 import ProfileStyle from "./Profile.module.css";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPosts from "./MyPosts/MyPosts";
+import {getPosts, getProfile, getStatus} from "../../redux/selectors/profile_selectors";
+import {getAuthUserId} from "../../redux/selectors/auth_selectors";
+import {AppDispatch} from "../../redux/redux_store";
 
-type MapStateToPropsType = {
-    posts: Array<PostType>
-    profile: ProfileType | null
-    status: string
-    authUserId: number | null
-    isAuth: boolean
-}
+export const ProfileContainer = () => {
 
-type MapDispatchToPropsType = {
-    getUserProfile: (userId: number) => void
-    getStatus: (userId: number) => void
-    updateStatus: (status: string) => void
-    addPost:(newPostText: string) => void
-    deletePost: (postId: number) => void
-    updPhoto: (file: File) => void
-    updateInfo: (profile: ProfileType) => void
-}
+    const posts = useSelector(getPosts)
+    const profile = useSelector(getProfile)
+    const status = useSelector(getStatus)
+    const authUserId = useSelector(getAuthUserId)
 
-type PropsType = MapStateToPropsType & MapDispatchToPropsType
-
-const ProfileContainer: FC<PropsType> = (props) => {
+    const dispatch: AppDispatch = useDispatch()
 
     const params = useParams()
     let userId: number | null  = Number(params.userId)
 
-    const refreshProfile = () => {
-
+    useEffect(() => {
         if (!userId) {
-            userId = props.authUserId;
+            userId = authUserId;
         }
         if (typeof userId === "number") {
-            props.getUserProfile(userId)
-            props.getStatus(userId)
+            dispatch(requestUserProfile(userId))
+            dispatch(requestStatus(userId))
         }
-    }
-
-    useEffect(() => {
-        refreshProfile()
     }, [userId]);
 
     return (
         <div className={ProfileStyle.profileWrapper}>
             <ProfileInfo
                 isOwner={!userId}
-                profile={props.profile}
-                status={props.status}
-                updateStatus={props.updateStatus}
-                updPhoto={props.updPhoto}
-                updateInfo={props.updateInfo}
+                profile={profile}
+                status={status}
             />
-            <MyPosts  posts={props.posts} addPost={props.addPost} deletePost={props.deletePost}
-            />
+            <MyPosts posts={posts} />
         </div>
     )
 }
-
-let mapStateToProps = (state: AppStateType) => ({
-    posts: state.profilePage.posts,
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    authUserId: state.auth.id,
-    isAuth: state.auth.isAuth
-});
-
-const addPost = actions.addPost
-const deletePost = actions.deletePost
-
-export default compose(
-    connect(mapStateToProps, { addPost, deletePost, getUserProfile, getStatus, updateStatus, updPhoto, updateInfo})
-)(ProfileContainer);

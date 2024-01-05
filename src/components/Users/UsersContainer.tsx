@@ -1,122 +1,89 @@
-import React, {FC, useEffect, useState} from "react";
-import {connect} from "react-redux";
-import {followed, requestUsers} from "../../redux/usersReducer";
-import s from "./Users.module.css";
-import {NavLink} from "react-router-dom";
-import avatar from "../../assets/images/avatar.svg";
-import {UsersType} from "../../redux/types/types";
-import {AppStateType} from "../../redux/redux_store";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {FilterType, followed, requestUsers} from "../../redux/usersReducer";
+import s from "./users.module.css";
+import {AppDispatch} from "../../redux/redux_store";
+import {UsersSearchForm} from "./UsersSearchForm";
+import {UpperBlockPagination} from "./UsersPagination/UpperBlockPagination";
+import {LowerBlockPagination} from "./UsersPagination/LowerBlockPagination";
+import {UserCard} from "./UserCard";
+import {
+    getFilter,
+    getFollowingId,
+    getLoading,
+    getPage,
+    getTotalCount,
+    getUsers
+} from "../../redux/selectors/users_selectors";
+// import {useLocation, useNavigate} from "react-router";
+import {useSearchParams} from "react-router-dom";
 
-type MapStateToPropsType = {
-    loading: boolean
-    users: UsersType[]
-    followingId: number | null
-    totalCount: number
-}
+export const UsersContainer = React.memo(() => {
 
-type MapDispatchToPropsType = {
-    followed: (userId: number) => void
-    requestUsers(page: number): void
-}
+    const users = useSelector(getUsers)
+    const totalCount = useSelector(getTotalCount)
+    const followingId = useSelector(getFollowingId)
+    const page = useSelector(getPage)
+    const loading = useSelector(getLoading)
+    const filter = useSelector(getFilter)
 
-type PropsType = MapStateToPropsType & MapDispatchToPropsType
+    const dispatch: AppDispatch = useDispatch()
 
-const UsersContainer: FC<PropsType> = (props: PropsType) => {
-
-    const [count, setCount] = useState<number>(5)
-    const [page, setPage] = useState<number>(1)
-    const totalPage = Math.ceil(props.totalCount / 100)
-
-    const getPage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const n = Number(e.target.value)
-        setPage(n)
+    const reqUsers = (currentPage: number, filter: FilterType) => {
+        dispatch(requestUsers(currentPage, filter))
     }
 
+    const [count, setCount] = useState<number>(4)
+    const [currentPage, setCurrentPage] = useState<number>(page)
+    const totalPage = Math.ceil(totalCount / 100)
+    const [searchParams, setSearchParams] = useSearchParams()
+
     useEffect(() => {
-      props.requestUsers(page)
-    }, [page]);
+        reqUsers(currentPage, filter)
+    }, [currentPage]);
+
+    useEffect(() => {
+        const term = filter.term
+        const friend = filter.friend
+
+        let urlQuery =
+            (term === ''? '' : `&term=${term}`)
+        + (friend === null ? '' : `&friend=${friend}`)
+        + (currentPage === 1 ? '' : `&page=${currentPage}`)
+
+        setSearchParams(urlQuery)
+
+    }, [filter,currentPage]);
 
     return (
         <div className={s.users}>
             <div className={s.infoPage}>
-                <span>Total users: {props.totalCount}</span>
+                <span>Users per page: 100</span>
                 <span>Total pages: {totalPage}</span>
-                <span>Total users per page: 100</span>
+                <span>Total users: {totalCount}</span>
             </div>
-            <div className={s.pagination}>
-                 <button
-                    onClick={() => setPage(page - 1)} className={s.showMore} disabled={page === 1}>
-                    PrevPage
-                </button>
-                <label>
-                    Page:
-                    <input className={s.numberPage} value={page} onChange={getPage}/>
-                </label>
-                <button
-                    onClick={() => {setPage(page + 1); setCount(5)}} className={s.showMore} disabled={props.loading}>
-                    NextPage
-                </button>
-            </div>
-            {props.users.slice(0, count).map((u, i) =>
-                <div className={s.userItem} key={i}>
-                    <span className={s.follow}>
-                             <NavLink to={'/' + u.id}>
-                                <img src={u.photos.small ? u.photos.small : avatar}
-                                     alt=''
-                                     className={s.userPhoto}/>
-                             </NavLink>
-                                <button className={`${s.followed} ${u.followed && s.followed_unfollow}`}
-                                        disabled={props.followingId === u.id}
-                                        onClick={() => props.followed(u.id)}>
-                                         {u.followed ? "Unfollow" : "Follow"}
-                                 </button>
-                     </span>
-                    <div className={s.info}>
-                        <div>
-                            <span>Name: </span>{u.name}
-                        </div>
-                        <div>
-                            <span>Followed:</span>
-                            <div className={`${s.stateFollow} ${!u.followed && s.stateUnfollow}`}></div>
-                        </div>
-                        <span>User id: </span>{u.id}
-                    </div>
-                    {u.status !== null && <div className={s.description}>
-                        <span>Status: </span>{u.status}</div>}
-                </div>
-            )}
-            <div >
-                {count < 100 && <button
-                    onClick={() => setCount(count + 5)} className={s.showMore} disabled={props.loading}>
-                    {props.loading ? "Loading..." : "Load More"}
-                </button>}
-                {count === 100 &&
-                    <div className={s.pagination}>
-                        <button
-                            onClick={() => {setPage(page - 1);setCount(5)}}
-                            className={s.showMore} disabled={page === 1}>
-                            PrevPage
-                        </button>
-                        <input className={s.showMore} value={page} onChange={getPage}/>
-                        <button
-                            onClick={() => {setPage(page + 1); setCount(5)}}
-                            className={s.showMore} disabled={props.loading}>
-                            NextPage
-                        </button>
-                    </div>}
-            </div>
+            <UpperBlockPagination
+                totalPage={totalPage}
+                setPage={setCurrentPage}
+                page={currentPage}
+                setCount={setCount}
+                users={users}
+                loading={loading}/>
+            <UsersSearchForm
+                setPage={setCurrentPage}
+                requestUsers={reqUsers}
+                page={currentPage}/>
+            <UserCard
+                users={users}
+                count={count}/>
+            <LowerBlockPagination
+                setCurrentPage={setCurrentPage}
+                count={count}
+                totalPage={totalPage}
+                currentPage={currentPage}
+                setCount={setCount}
+                users={users}
+                loading={loading}/>
         </div>
     )
-}
-
-let mapStateToProps = (state: AppStateType) => {
-    return {
-        loading: state.usersPage.loading,
-        users: state.usersPage.users,
-        followingId: state.usersPage.followingId,
-        totalCount: state.usersPage.totalCount,
-    }
-}
-
-export default connect(mapStateToProps,
-    {followed, requestUsers})(UsersContainer) as React.ComponentType
+})

@@ -5,18 +5,20 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import {Route, Routes} from "react-router-dom";
 import Friends from "./components/Friends/Friends";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import SidebarContainer from "./components/Sidebar/SidebarContainer";
-import Login from "./components/Login/Login";
 import {initializeApp} from "./redux/app_Reducer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import Preloader from "./components/common/preloader/preloader";
 import {AppStateType} from "./redux/redux_store";
+import {Login} from "./components/Login/Login";
+import {ProfileContainer} from "./components/Profile/ProfileContainer";
+// import {UsersContainer} from "./components/Users/UsersContainer";
 
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
-const UsersContainer = lazy(() => import('./components/Users/UsersContainer'));
+const UsersContainer = lazy(() =>  import('./components/Users/UsersContainer')
+    .then(promise=> ({ default: promise.UsersContainer })));
 
 type PropsTypes = {
     initialized: boolean

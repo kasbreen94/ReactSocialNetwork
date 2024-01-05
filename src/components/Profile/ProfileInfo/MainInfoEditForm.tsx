@@ -64,7 +64,7 @@ export const MainInfoEditForm: FC<PropsType> = (props) => {
                             {c}:
                             <input placeholder="enter your text" className={s.contacts}
                                 // @ts-ignore
-                                   {...register(`contacts.${c}`, {
+                                   {...register('contacts.' + c, {
                                    })}/>
                         </div>)}
                 </div>}

@@ -5,17 +5,19 @@ import avatar from "../../../assets/images/avatar.svg";
 import ProfileStatus from "./ProfileStatus";
 import {MainInfoEditForm} from "./MainInfoEditForm";
 import {ProfileType} from "../../../redux/types/types";
+import {useDispatch} from "react-redux";
+import {updateInfo, updPhoto} from "../../../redux/profileReducer";
+import {AppDispatch} from "../../../redux/redux_store";
 
 type PropsTypes = {
     isOwner: boolean
     profile: ProfileType | null
     status: string
-    updateStatus: (status: string) => void
-    updPhoto: (file: File) => void
-    updateInfo: (profile: ProfileType) => void
 }
 
 const ProfileInfo: FC<PropsTypes> = (props) => {
+
+    const dispatch: AppDispatch = useDispatch()
 
     const [info, setInfo] = useState({mainInfo: true, aboutMe: false, contacts: false})
 
@@ -34,13 +36,13 @@ const ProfileInfo: FC<PropsTypes> = (props) => {
     }
 
     const onSubmit = (data: ProfileType) => {
-        props.updateInfo(data)
+        dispatch(updateInfo(data))
         setEditMode(false)
     }
 
     const mainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
-            props.updPhoto(e.target.files[0])
+            dispatch(updPhoto(e.target.files[0]))
         }
     }
 
@@ -51,7 +53,7 @@ const ProfileInfo: FC<PropsTypes> = (props) => {
     return (
         <div className={s.info}>
             <div className={s.profileInfo}>
-                <ProfileStatus isOwner={props.isOwner} status={props.status} updateStatus={props.updateStatus}/>
+                <ProfileStatus isOwner={props.isOwner} status={props.status}/>
                 <div className={s.Photo}>
                     <div>
                         <img src={props.profile.photos.large || avatar} alt=''/>

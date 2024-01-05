@@ -3,8 +3,8 @@ import {BaseThunkType, InferActionsTypes} from "./redux_store";
 import {profileAPI} from "../api/profileAPI";
 
 export type InitialStateType = typeof initialState
-type ActionsTypes = InferActionsTypes<typeof actions>
-type ThunkType = BaseThunkType<ActionsTypes>
+export type ActionsTypes = InferActionsTypes<typeof actions>
+export type ThunkType = BaseThunkType<ActionsTypes>
 
 let initialState = {
     posts: [] as Array<PostType>,
@@ -56,12 +56,12 @@ export const actions = {
     setPhoto: (photos: PhotosType) => ({type: 'SN/PROFILE/SET_PHOTO', photos} as const)
 }
 
-export const getUserProfile = (userId: number): ThunkType => async (dispatch) => {
+export const requestUserProfile = (userId: number): ThunkType => async (dispatch) => {
     let data = await profileAPI.getProfile(userId)
     dispatch(actions.setUserProfile(data));
 }
 
-export const getStatus = (userId: number): ThunkType => async (dispatch) => {
+export const requestStatus = (userId: number): ThunkType => async (dispatch) => {
 
     let data = await profileAPI.getStatus(userId);
     dispatch(actions.setStatus(data));
@@ -88,7 +88,7 @@ export const updateInfo = (profile: ProfileType): ThunkType => async (dispatch, 
     let data = await profileAPI.updateInfo(profile);
     if (data.resultCode === 0) {
         if(userId !== null) {
-            await dispatch(getUserProfile(userId));
+            await dispatch(requestUserProfile(userId));
         } else {
             throw new Error('userId can`t be null')
         }

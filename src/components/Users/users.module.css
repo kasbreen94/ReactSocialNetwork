@@ -1,21 +1,87 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number]{
+    -moz-appearance: textfield;
+}
+
 .pagination {
     display: flex;
 }
 
-.pagination input {
-    width: 30px;
+.pagination div {
+    display: inline-block;
+
 }
 
 .infoPage {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
-.pagination div {
-    display: inline-block;
+.pageInput{
+    font-size: 14px;
+    text-align: center;
+}
+
+.pageInput input {
     width: 40px;
+    outline: none;
+}
+
+.numberPage {
+    font-size: 14px;
+    color: azure;
+    border: none;
+    background: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
+    border-radius: 5px;
+    padding: 3px 10px;
+    margin: 10px 5px;
+    text-align: center;
+}
+
+.usersSearch {
+    padding: 0 30px;
+}
+
+.usersSearch form{
+    display: flex;
+    gap: 10px;
+}
+
+.usersSearch input {
+    outline: none;
+}
+
+.usersSearch select{
+    color: azure;
+    padding: 5px;
+    box-shadow: inset 0 0 5px 1px rgba(0, 0, 0, 0.62), 0 0 3px rgba(1, 255, 81, 0.25);
+    border-radius: 7px;
+    background: none;
+    border: none;
+    height: 25px;
+}
+
+.usersSearch option{
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.usersSearch input{
+    color: azure;
+    width: 100%;
+    height: 15px;
+    padding: 5px;
+    box-shadow: inset 0 0 5px 1px rgba(0, 0, 0, 0.62), 0 0 3px rgba(1, 255, 81, 0.25);
+    border-radius: 7px;
+    background: none;
+    border: none;
 }
 
 .userItem {
@@ -116,6 +182,8 @@
 .description {
     grid-area: d;
     font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .info span, .description span{
@@ -130,20 +198,14 @@
     display: block;
     color: azure;
     border: none;
-background: none;
+    background: none;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
     border-radius: 5px;
     padding: 3px 10px;
     margin: 10px auto 10px;
 }
 
-.numberPage {
-    color: azure;
-    border: none;
-    background: none;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);
-    border-radius: 5px;
-    padding: 3px 10px;
-    margin: 10px 5px;
-    text-align: center;
+button:disabled {
+    color: #3b3a3a;
+    cursor: no-drop;
 }

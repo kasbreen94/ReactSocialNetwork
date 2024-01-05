@@ -1,16 +1,14 @@
 import React, {FC} from 'react';
 import {useForm} from "react-hook-form";
 import s from "./MyPosts.module.css";
-
-type PropsTypes = {
-    addPost:(newPostText: string) => void
-}
+import {useDispatch} from "react-redux";
+import {actions} from "../../../redux/profileReducer";
 
 type NewPostFormType = {
     newPostText: string
 }
 
-export const AddPostForm: FC<PropsTypes> = (props) => {
+export const AddPostForm = () => {
     const {
         register,
         formState: {errors, isValid, isDirty},
@@ -20,8 +18,10 @@ export const AddPostForm: FC<PropsTypes> = (props) => {
         mode: "onBlur"
     });
 
+    const dispatch = useDispatch()
+
     const onSubmit = (data: NewPostFormType) => {
-        props.addPost(data.newPostText)
+        dispatch(actions.addPost(data.newPostText))
         reset();
     }
 

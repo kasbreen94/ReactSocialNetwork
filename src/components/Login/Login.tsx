@@ -1,37 +1,29 @@
-import React, {FC} from "react";
-import {connect} from "react-redux";
+import React from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {logIn} from "../../redux/auth_Reducer";
 import {Navigate} from "react-router-dom";
 import {LoginForm} from "./LoginForm";
-import {AppStateType} from "../../redux/redux_store";
+import {getCaptcha, getIsAuth} from "../../redux/selectors/auth_selectors";
 
-type MapStateToPropsType = {
-    isAuth: boolean
-    captcha: string | null
-}
+export const Login = () => {
 
-type MapDispatchToPropsType = {
-    logIn: (email: string, password: string, rememberMe: boolean, captcha: string | null) => void
-}
+    const isAuth = useSelector(getIsAuth)
+    const captcha = useSelector(getCaptcha)
 
-type PropsType = MapStateToPropsType & MapDispatchToPropsType
+    const dispatch = useDispatch()
 
-const Login: FC<PropsType> = (props) => {
+    const login = (email: string, password: string, rememberMe: boolean, captcha: string | null) => {
+        // @ts-ignore
+        dispatch(logIn(email, password, rememberMe, captcha))
+    }
 
-    if(props.isAuth) {
+    if(isAuth) {
         return <Navigate to={"/"} />
     }
 
     return (
         <div >
-           <LoginForm  login={props.logIn} captcha={props.captcha}/>
+           <LoginForm  login={login} captcha={captcha}/>
         </div>
     )
 }
-
-const mapStateToProps = (state: AppStateType) => ({
-    isAuth: state.auth.isAuth,
-    captcha: state.auth.captcha
-});
-
-export default connect (mapStateToProps, {logIn})(Login);
