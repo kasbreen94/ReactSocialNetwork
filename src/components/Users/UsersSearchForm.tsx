@@ -2,6 +2,8 @@ import React, {FC} from "react";
 import {useForm} from "react-hook-form";
 import s from "./users.module.css";
 import {FilterType} from "../../redux/usersReducer";
+import {useSelector} from "react-redux";
+import {getFilter} from "../../redux/selectors/users_selectors";
 
 type PropsTypes = {
     setPage: (page: number) => void
@@ -9,18 +11,24 @@ type PropsTypes = {
     page: number
 }
 
+type FriendFormType = "true" | "false" | "null"
+
 type FormType = {
     term: string
-    friend: "true" | "false" | "null"
+    friend: FriendFormType
 }
 
 export const UsersSearchForm: FC<PropsTypes> = ({setPage, requestUsers, page}) => {
+
+    const filter = useSelector(getFilter)
+
     const {
         register,
         handleSubmit,
     } = useForm<FormType>({
         mode: "onChange",
-        defaultValues: {term: '', friend: 'null'}
+        values: {term: filter.term, friend: String(filter.friend) as FriendFormType}
+        // defaultValues: {term: filter.term, friend: String(filter.friend) as FriendFormType}
     });
 
     const onFilterChange = (filter: FilterType) => {

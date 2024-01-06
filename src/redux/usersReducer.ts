@@ -34,6 +34,9 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
         case 'SN/USERS/SET_USERS': {
             return {...state, users: action.users}
         }
+        case 'SN/USERS/CURRENT_PAGE': {
+            return {...state, page: action.page}
+        }
         case 'SN/USERS/FILTER': {
             return {...state, filter: action.payload}
         }
@@ -54,6 +57,7 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
 export const actions = {
     followedSuccess: (userId: number) => ({type: 'SN/USERS/FOLLOWED', userId} as const),
     setUsers: (users: Array<UsersType>) => ({type: 'SN/USERS/SET_USERS', users} as const),
+    setCurrentPage: (page: number) => ({type: 'SN/USERS/CURRENT_PAGE', page} as const),
     setFilter: (filter: FilterType) => ({type: 'SN/USERS/FILTER', payload: filter} as const),
     totalCount: (totalCount: number) => ({type: 'SN/USERS/TOTAL_COUNT', totalCount} as const),
     loadingUsers: (loading: boolean) => ({type: 'SN/USERS/LOADING', loading} as const),
@@ -64,9 +68,8 @@ export const actions = {
 export const requestUsers = (page: number, filter: FilterType): ThunkType => async (dispatch) => {
     dispatch(actions.loadingUsers(true))
     dispatch(actions.setFilter(filter))
-
+    dispatch(actions.setCurrentPage(page))
     let data = await usersAPI.getUsers(page, filter.term, filter.friend)
-
     dispatch(actions.setUsers(data.items))
     dispatch(actions.totalCount(data.totalCount))
     dispatch(actions.loadingUsers(false))
