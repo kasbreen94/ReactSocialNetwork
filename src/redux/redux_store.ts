@@ -1,21 +1,25 @@
 import {Action, applyMiddleware, combineReducers, compose, legacy_createStore as createStore} from "redux";
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
-import sidebarReducer from "./sidebarReducer";
-import usersReducer from "./usersReducer";
+import usersSlice from "./usersSlice";
 import authReducer from "./auth_Reducer";
 import {thunk as thunkMiddleware, ThunkAction, ThunkDispatch} from "redux-thunk";
-import app_Reducer from "./app_Reducer";
+import app_Reducer from "./appSlice";
+import {configureStore} from "@reduxjs/toolkit";
+import {TypedUseSelectorHook, useSelector} from "react-redux";
 
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
-    sidebar: sidebarReducer,
-    usersPage: usersReducer,
+    usersPage: usersSlice,
     auth: authReducer,
     app: app_Reducer,
 });
+
+const store = configureStore({
+    reducer: rootReducer
+})
 
 type RootReducerType = typeof rootReducer
 export type AppStateType = ReturnType<RootReducerType>
@@ -26,9 +30,14 @@ export type BaseThunkType<A extends Action = Action, R = Promise<void>> = ThunkA
 
 export type AppDispatch = ThunkDispatch<AppStateType, unknown, Action>
 
+// export type AppDispatch = typeof store.dispatch;
+// export const useAppDispatch = (): AppDispatch => useDispatch<AppDispatch>();
+
+export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector;
+
 // @ts-ignore
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+// const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
 
 // let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 

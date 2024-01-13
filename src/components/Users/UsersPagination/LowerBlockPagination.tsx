@@ -19,7 +19,7 @@ export const LowerBlockPagination: FC<PropsTypes> = ({setCurrentPage, currentPag
         <div >
             {count < users.length
                 ? <button onClick={() => setCount(count + 10)} className={s.showMore} disabled={loading}>
-                    {loading ? "Loading..." : "Load More"}
+                    {loading ? "Loading..." : "Load more"}
                 </button>
                 : ( (currentPage < totalPage || count === 100)
                     && <button onClick={() => {setCurrentPage(currentPage + 1);setCount(4)}}

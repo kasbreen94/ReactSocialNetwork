@@ -107,7 +107,7 @@ const ProfileInfo: FC<PropsTypes> = (props) => {
                                 </div>
                                 <div className={s.descriptionItem}>
                                     <span>Looking for a job:</span>
-                                    {props.profile.lookingForAJob === true ? 'Ищу работу' : 'Не ищу работу'}
+                                     <div className={`${s.lookingForAJob} ${props.profile.lookingForAJob === false && s.notLookingForAJob}`}></div>
                                 </div>
                                 <div className={s.descriptionItem}>
                                     <span>My professional skills:</span>

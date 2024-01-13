@@ -64,9 +64,11 @@ export const LoginForm: FC<PropsType> = (props) => {
                                          {...register("captcha", {
                                              required: "enter text captcha",
                                          })}/>}
+
+                <button type="submit" disabled={!isValid} className={s.login}>Login</button>
             </div>
 
-            <button type="submit" disabled={!isValid} className={s.login}>Login</button>
+
 
         </form>
     )

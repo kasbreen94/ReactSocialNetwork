@@ -33,7 +33,7 @@ export const UpperBlockPagination: FC<PropsTypes> = ({setPage, page, setCount, u
                         setPage(page - 1);
                         setCount(4)
                     }}
-                    className={s.showMore} disabled={page === 1}>
+                    className={s.showMore} disabled={loading || page === 1}>
                     PrevPage
                 </button>
                 <div className={s.numberPage}>Current page: {page}</div>

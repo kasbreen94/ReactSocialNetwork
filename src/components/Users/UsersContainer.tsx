@@ -1,28 +1,23 @@
 import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {actions, FilterType, requestUsers} from "../../redux/usersReducer";
+import {useDispatch} from "react-redux";
+import {currentPage, FilterType, requestUsers} from "../../redux/usersSlice";
 import s from "./users.module.css";
-import {AppDispatch} from "../../redux/redux_store";
+import {AppDispatch, useAppSelector} from "../../redux/redux_store";
 import {UsersSearchForm} from "./UsersSearchForm";
 import {UpperBlockPagination} from "./UsersPagination/UpperBlockPagination";
 import {LowerBlockPagination} from "./UsersPagination/LowerBlockPagination";
 import {UserCard} from "./UserCard";
-import {getFilter, getLoading, getPage, getTotalCount, getUsers} from "../../redux/selectors/users_selectors";
 import {useSearchParams} from "react-router-dom";
 
 
 export const UsersContainer = React.memo(() => {
 
-    const users = useSelector(getUsers)
-    const totalCount = useSelector(getTotalCount)
-    const page = useSelector(getPage)
-    const loading = useSelector(getLoading)
-    const filter = useSelector(getFilter)
+    const {users, totalCount, page, loading, filter} = useAppSelector(state => state.usersPage)
 
     const dispatch: AppDispatch = useDispatch()
 
     const getCurrentPage = (page: number) => {
-        dispatch(actions.setCurrentPage(page))
+        dispatch(currentPage(page))
     }
 
     const reqUsers = (page: number, filter: FilterType) => {
@@ -30,7 +25,6 @@ export const UsersContainer = React.memo(() => {
     }
 
     const [count, setCount] = useState<number>(4)
-    // const [currentPage, setCurrentPage] = useState<number>(page)
     const totalPage = Math.ceil(totalCount / 100)
 
     const [searchParams, setSearchParams] = useSearchParams()
@@ -43,33 +37,26 @@ export const UsersContainer = React.memo(() => {
             friend: searchParams.get("friend") as string
         }
 
-
-        // const parsedPage: string | null = searchParams.get("page")
-        // const parsedTerm: string | null = searchParams.get("term")
-        // const parsedFriend: string | null | boolean = searchParams.get("friend")
-
         let actualPage = page
         let actualFilter = filter
 
         if (!!parsed.page) actualPage = Number(parsed.page)
-        if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term}
+        if (actualPage === 0) actualPage = page
+        if (parsed.page === null) actualPage = 1
+
+        if (!!parsed.term) {
+            actualFilter = {...actualFilter, term: parsed.term}
+        } else actualFilter = {...actualFilter, term: ''}
+
         if (parsed.friend === "null") actualFilter = {...actualFilter, friend: null}
         if (parsed.friend === "true") actualFilter = {...actualFilter, friend: true}
         if (parsed.friend === "false") actualFilter = {...actualFilter, friend: false}
-        // switch (parsedFriend) {
-        //     case 'null':
-        //         actualFilter = {...actualFilter, friend: null}
-        //         break
-        //     case 'true':
-        //         actualFilter = {...actualFilter, friend: true}
-        //         break
-        //     case 'false':
-        //         actualFilter = {...actualFilter, friend: false}
-        //         break
-        // }
+        if (parsed.friend === null) actualFilter = {...actualFilter, friend: null}
 
         reqUsers(actualPage, actualFilter)
+
     }, [searchParams]);
+
 
     useEffect(() => {
         const term = filter.term

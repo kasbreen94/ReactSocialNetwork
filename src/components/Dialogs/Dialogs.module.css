@@ -1,19 +1,20 @@
-.dialogs {
-    display: grid;
-    grid-template-areas:
-    'a b'
-    '. b';
-    grid-template-columns: 150px 12fr;
-    grid-template-rows: 200px 12fr;
-}
+/*.dialogs {*/
+/*    margin-top: 45px;*/
+/*    display: grid;*/
+/*    grid-template-areas:*/
+/*    'a b'*/
+/*    '. b';*/
+/*    grid-template-columns: 150px 12fr;*/
+/*    grid-template-rows: 200px 12fr;*/
+/*}*/
 
 .dialogsItems {
     overflow: auto;
     grid-area: a;
     /*background-color: rgba(28, 96, 243, 0.17);*/
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 0 5px 15px 15px;
-    box-shadow: inset 0 0 10px 3px rgba(0, 0, 0, 0.62), 0 0 3px rgba(1, 255, 81, 0.25);
+    box-shadow:  0 0 10px 3px rgba(0, 0, 0, 0.62), inset 0 0 3px rgba(1, 255, 81, 0.25);
     height: 250px;
 }
 
@@ -34,11 +35,11 @@
 }
 
 .dialogs a.active {
-    /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.62);*/
+    text-shadow: 2px 2px 4px rgba(10, 210, 49, 0.72);
     padding: 5px 5px;
-    margin-left: 7px;
+
     /*background-color: rgba(1, 255, 81, 0.25);*/
-    background-size: 130%;
+
     border-radius: 3px;
 }
 
@@ -60,27 +61,115 @@
     padding: 5px 5px;
 }
 
+.openChat{
+    z-index: 11;
+    position: fixed;
+    right: 5px;
+    bottom: 5px;
+    width: 165px;
+}
+
+.openChat button{
+    cursor: pointer;
+    width: 80px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(1, 255, 81, 0.48);
+    box-shadow:  0 0 5px rgba(1, 255, 81, 0.48);
+}
+
+.closeChat {
+    position: absolute;
+    bottom: -25px;
+    width: 100%;
+    text-align: center;
+}
+
+.closeChat button {
+    cursor: pointer;
+    display: inline-block;
+    width: 80px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 67, 67, 0.68);
+    box-shadow:  0 0 5px 1px rgba(255, 67, 67, 0.68), inset 0 0 5px 2px rgba(0, 0, 0, 0.62);
+}
+
 .messages {
+    z-index: 10;
+    color: azure;
+    position: fixed;
     /*background-color: rgba(1, 255, 81, 0.18);*/
-    border-radius: 30px;
-    padding: 30px;
+    background-color: rgba(44, 43, 43, 0.98);
+    border-radius: 5px;
+    padding: 5px;
     margin-left: 10px;
-    box-shadow: inset 0 0 10px 3px rgba(0, 0, 0, 0.62), 0 0 3px rgba(1, 255, 81, 0.25);
+    box-shadow:  0 0 10px 3px rgba(0, 0, 0, 0.62), inset 0 0 3px rgba(1, 255, 81, 0.25);
     grid-area: b;
-    position:relative;
+    right: 5px;
+    bottom: 30px;
+    width: 250px;
+}
+
+.messageChat {
+    border-radius: 5px;
+    padding: 5px;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.messageChat::-webkit-scrollbar {
+    width: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
+    border-radius: 5px;
+}
+
+.messageChat::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: rgba(1, 255, 81, 0.4);
+    border-radius: 5px;
+}
+
+.messageItem,  .messageItemAuth{
+    display: flex;
+    margin-bottom: 7px;
+    box-shadow:  0 0 10px 3px rgba(0, 0, 0, 0.62), 0 0 3px rgba(1, 255, 81, 0.25);
+    padding: 5px;
+    width: 190px;
+    border-radius: 5px;
+}
+
+.messageItemAuth {
+    margin-left: auto;
+    box-shadow:  0 0 10px 3px rgba(0, 0, 0, 0.62), inset 0 0 3px rgba(1, 255, 81, 0.25);
+}
+
+.photo {
+    text-align: center;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.photo img {
+    margin-top: 5px;
+    display: inline-block;
+    width: 30px;
+    border-radius: 5px;
+}
+
+.userName {
+    font-size: 13px;
 }
 
 .message {
-    border-radius: 20px;
-    box-shadow: inset 0 0 10px 3px rgba(0, 0, 0, 0.62), 0 0 3px rgba(1, 255, 81, 0.25);
-    padding: 15px;
-    min-height: 200px;
-    word-wrap: break-word;
-    word-break: break-word;
-}
 
-.addMessage {
-    margin-bottom: 10px;
+    font-size: 11px;
+    /*padding: 10px;*/
+    /*box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.62);*/
+    width: 150px;
+    min-height: 20px;
+    border-radius: 5px;
+    word-wrap: break-word;
 }
 
 .addMessage textarea {
@@ -88,12 +177,12 @@
     color: azure;
     border: none;
     background: none;
-    border-radius: 20px;
+    border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);
-    width: 95%;
-    height: 70px;
+    width: 92%;
+    height: 60px;
     padding: 10px;
-    margin-top: 30px;
+    margin-top: 10px;
     outline: none;
 }
 

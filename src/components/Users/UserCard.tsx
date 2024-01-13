@@ -3,10 +3,9 @@ import {NavLink} from "react-router-dom";
 import avatar from "../../assets/images/avatar.svg";
 import React, {FC} from "react";
 import {UsersType} from "../../redux/types/types";
-import {AppDispatch} from "../../redux/redux_store";
-import {useDispatch, useSelector} from "react-redux";
-import {followed} from "../../redux/usersReducer";
-import {getFollowingId} from "../../redux/selectors/users_selectors";
+import {AppDispatch, useAppSelector} from "../../redux/redux_store";
+import {useDispatch} from "react-redux";
+import {followed} from "../../redux/usersSlice";
 
 type PropsTypes = {
     users: UsersType[]
@@ -15,7 +14,7 @@ type PropsTypes = {
 
 export const UserCard: FC<PropsTypes> = ({users, count}) => {
 
-    const followingId = useSelector(getFollowingId)
+    const followingId = useAppSelector(state => state.usersPage.followingId)
 
     const dispatch: AppDispatch = useDispatch()
 
