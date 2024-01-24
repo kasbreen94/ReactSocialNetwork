@@ -1,22 +1,17 @@
 import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {requestStatus, requestUserProfile} from "../../redux/profileReducer";
+import {clearUserProfile, requestStatus, requestUserProfile} from "../../redux/profileSlice";
 import {useParams} from "react-router-dom";
 import ProfileStyle from "./Profile.module.css";
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import MyPosts from "./MyPosts/MyPosts";
-import {getPosts, getProfile, getStatus} from "../../redux/selectors/profile_selectors";
-import {getAuthUserId} from "../../redux/selectors/auth_selectors";
-import {AppDispatch} from "../../redux/redux_store";
+import {useAppDispatch, useAppSelector} from "../../redux/store";
 
 export const ProfileContainer = () => {
 
-    const posts = useSelector(getPosts)
-    const profile = useSelector(getProfile)
-    const status = useSelector(getStatus)
-    const authUserId = useSelector(getAuthUserId)
+    const {posts, profile, status} = useAppSelector(state => state.profilePage)
+    const authUserId = useAppSelector(state => state.auth.auth.id)
 
-    const dispatch: AppDispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const params = useParams()
     let userId: number | null  = Number(params.userId)
@@ -28,6 +23,9 @@ export const ProfileContainer = () => {
         if (typeof userId === "number") {
             dispatch(requestUserProfile(userId))
             dispatch(requestStatus(userId))
+        }
+        return () => {
+            dispatch(clearUserProfile())
         }
     }, [userId]);
 

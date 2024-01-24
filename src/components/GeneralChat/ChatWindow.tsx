@@ -1,19 +1,15 @@
-import {sendMessage, startMessagesListening, stopMessagesListening} from "../../redux/dialogsReducer";
-import {useDispatch, useSelector} from "react-redux";
+import {sendMessage, startMessagesListening, stopMessagesListening} from "../../redux/chatSlice";
 import React, {useEffect, useRef, useState} from "react";
 import s from "./Dialogs.module.css";
-import {AppDispatch} from "../../redux/redux_store";
-import {getMessages, getStatusCh} from "../../redux/selectors/dialogs_selectors";
-import {getAuthUserId} from "../../redux/selectors/auth_selectors";
+import {useAppDispatch, useAppSelector} from "../../redux/redux_store";
 import avatar from "../../assets/images/avatar.svg";
 
-export const DialogsContainer = () => {
+export const ChatContainer = () => {
 
-    const status = useSelector(getStatusCh)
-    const messages = useSelector(getMessages)
-    const authUserId = useSelector(getAuthUserId)
+    const authUserId = useAppSelector(state => state.auth.auth.id)
+    const {status, messages} = useAppSelector(state => state.dialogsPage)
 
-    const dispatch: AppDispatch = useDispatch()
+    const dispatch= useAppDispatch()
 
     const [chat, setChat] = useState<boolean>(false)
 
@@ -52,7 +48,7 @@ export const DialogsContainer = () => {
             e.preventDefault()
             dispatch(sendMessage(value))
             console.log('enter')
-            value = ''
+            e.target.value = ''
         }
     }
 

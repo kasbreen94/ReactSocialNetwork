@@ -1,5 +1,5 @@
 // import React, {FC, useEffect, useRef, useState} from 'react';
-// import s from './Dialogs.module.css'
+// import s from './GeneralChat.module.css'
 // import avatar from "../../assets/images/avatar.svg";
 // import {AddMessageForm} from "./AddMessageForm";
 // import {useSelector} from "react-redux";

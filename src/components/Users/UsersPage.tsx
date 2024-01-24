@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
 import {currentPage, FilterType, requestUsers} from "../../redux/usersSlice";
 import s from "./users.module.css";
-import {AppDispatch, useAppSelector} from "../../redux/redux_store";
+import {useAppDispatch, useAppSelector} from "../../redux/redux_store";
 import {UsersSearchForm} from "./UsersSearchForm";
 import {UpperBlockPagination} from "./UsersPagination/UpperBlockPagination";
 import {LowerBlockPagination} from "./UsersPagination/LowerBlockPagination";
@@ -14,14 +13,15 @@ export const UsersContainer = React.memo(() => {
 
     const {users, totalCount, page, loading, filter} = useAppSelector(state => state.usersPage)
 
-    const dispatch: AppDispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const getCurrentPage = (page: number) => {
         dispatch(currentPage(page))
     }
 
     const reqUsers = (page: number, filter: FilterType) => {
-        dispatch(requestUsers(page, filter))
+
+        dispatch(requestUsers({page, filter}))
     }
 
     const [count, setCount] = useState<number>(4)
