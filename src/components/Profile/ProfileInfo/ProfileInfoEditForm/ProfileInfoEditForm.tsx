@@ -4,17 +4,13 @@ import s from "../Profile.module.css"
 import {ProfileType} from "../../../redux/types/types";
 
 type PropsType = {
-    info: {
-        mainInfo: boolean
-        contacts: boolean
-        aboutMe: boolean
-    }
+    info: 'mainInfo' | 'aboutMe' | 'contacts'
     profile: ProfileType
     onSubmit: (data: ProfileType) => void
-    dEditMode: React.MouseEventHandler<HTMLDivElement>
+    dEditMode: () => void
 }
 
-export const MainInfoEditForm: FC<PropsType> = (props) => {
+export const ProfileInfoEditForm: FC<PropsType> = (props) => {
 
     const {
         register,
@@ -32,7 +28,7 @@ export const MainInfoEditForm: FC<PropsType> = (props) => {
                 <button type="submit" disabled={!isValid} className={s.save}>Save</button>
                 <div onClick={props.dEditMode} className={s.close}>Close</div>
                 <div className={s.line}></div>
-                {props.info.mainInfo && <div>
+                {props.info === 'mainInfo' && <div>
                     <div>
                         Name:
                         <input placeholder="enter your name"
@@ -50,7 +46,7 @@ export const MainInfoEditForm: FC<PropsType> = (props) => {
                     </div>
 
                 </div>}
-                {props.info.aboutMe && <div >
+                {props.info === 'aboutMe' && <div >
                     About Me:
                     <textarea placeholder="enter your email" maxLength={300}
                            {...register("aboutMe", {
@@ -58,7 +54,7 @@ export const MainInfoEditForm: FC<PropsType> = (props) => {
                            )}/>
                 </div>}
 
-                {props.info.contacts && <div>
+                {props.info === 'contacts' && <div>
                     {Object.keys(props.profile.contacts!).map(c =>
                         <div key={c}>
                             {c}:

@@ -1,8 +1,7 @@
 import React, {ChangeEvent, FC, useEffect, useState} from "react";
 import ProfileInfoStyle from './ProfileInfo.module.css'
-import {useDispatch} from "react-redux";
-import {updateStatus} from "../../../redux/profileReducer";
-import {AppDispatch} from "../../../redux/redux_store";
+import {updateStatus} from "../../../redux/profileSlice";
+import {useAppDispatch} from "../../../redux/store";
 
 type PropsType = {
     status: string
@@ -11,7 +10,7 @@ type PropsType = {
 
 const ProfileStatus: FC<PropsType> = (props) => {
 
-    const dispatch: AppDispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const [editMode, setEditMode] = useState(false);
     const [status, setStatus] = useState(props.status)
