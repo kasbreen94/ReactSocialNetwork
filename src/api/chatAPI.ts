@@ -1,4 +1,4 @@
-import {StatusType} from "../redux/dialogsReducer";
+import {StatusType} from "../redux/chatSlice";
 
 export type ChatMessageAPIType = {
     message: string

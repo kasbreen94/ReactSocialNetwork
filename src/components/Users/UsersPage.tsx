@@ -1,104 +1,114 @@
 import React, {useEffect, useState} from "react";
-import {currentPage, FilterType, requestUsers} from "../../redux/usersSlice";
-import s from "./users.module.css";
-import {useAppDispatch, useAppSelector} from "../../redux/redux_store";
-import {UsersSearchForm} from "./UsersSearchForm";
-import {UpperBlockPagination} from "./UsersPagination/UpperBlockPagination";
-import {LowerBlockPagination} from "./UsersPagination/LowerBlockPagination";
-import {UserCard} from "./UserCard";
-import {useSearchParams} from "react-router-dom";
+import {useRequestUsersQuery} from "../../api/users_api";
+import {UsersType} from "../../redux/types/types";
+import {FollowedUser} from "./FollowedUser";
+import {AppBar, Avatar, Button, ButtonBase, Divider, Grid, Paper, Typography} from "@mui/material";
+import avatar from "./../../assets/images/avatar.svg";
+import {NavLink, useSearchParams} from "react-router-dom";
+import {UsersPagination} from "./UsersPagination";
+import {UsersFilterBlock} from "./UsersFilterBlock";
+import {Abc} from "@mui/icons-material";
 
+export const TestPage = React.memo(() => {
+    const [searchParams] = useSearchParams();
 
-export const UsersContainer = React.memo(() => {
+    const [page, setPage] = useState(1)
+    const [term, setTerm] = useState('')
+    const [friend, setFriend] = useState<null | boolean>(null)
 
-    const {users, totalCount, page, loading, filter} = useAppSelector(state => state.usersPage)
+    console.log(`Current page: ${page}`)
+    console.log(`Search term: ${term}`)
+    console.log(`Friend: ${friend}`)
 
-    const dispatch = useAppDispatch()
+    let count = Number(searchParams.get('count')) || 5;
 
-    const getCurrentPage = (page: number) => {
-        dispatch(currentPage(page))
-    }
+    const {
+        data: users, error, isLoading, isSuccess, isFetching
+    } = useRequestUsersQuery({page, count, term, friend});
 
-    const reqUsers = (page: number, filter: FilterType) => {
-
-        dispatch(requestUsers({page, filter}))
-    }
-
-    const [count, setCount] = useState<number>(4)
-    const totalPage = Math.ceil(totalCount / 100)
-
-    const [searchParams, setSearchParams] = useSearchParams()
-
-    useEffect(() => {
-
-        const parsed = {
-            page: searchParams.get("page") as string,
-            term: searchParams.get("term") as string,
-            friend: searchParams.get("friend") as string
-        }
-
-        let actualPage = page
-        let actualFilter = filter
-
-        if (!!parsed.page) actualPage = Number(parsed.page)
-        if (actualPage === 0) actualPage = page
-        if (parsed.page === null) actualPage = 1
-
-        if (!!parsed.term) {
-            actualFilter = {...actualFilter, term: parsed.term}
-        } else actualFilter = {...actualFilter, term: ''}
-
-        if (parsed.friend === "null") actualFilter = {...actualFilter, friend: null}
-        if (parsed.friend === "true") actualFilter = {...actualFilter, friend: true}
-        if (parsed.friend === "false") actualFilter = {...actualFilter, friend: false}
-        if (parsed.friend === null) actualFilter = {...actualFilter, friend: null}
-
-        reqUsers(actualPage, actualFilter)
-
-    }, [searchParams]);
-
+    const totalPage: number = isSuccess ? Math.ceil(users.totalCount / count) : 0;
 
     useEffect(() => {
-        const term = filter.term
-        const friend = filter.friend
-        let urlQuery =
-            (term === '' ? '' : `&term=${term}`)
-            + (friend === null ? '' : `&friend=${friend}`)
-            + (page === 1 ? '' : `&page=${page}`)
+        let searchPage = Number(searchParams.get('page'));
 
-        setSearchParams(urlQuery)
+        if (searchPage) setPage(Number(searchPage));
+        // if(totalPage < searchPage) setPage(totalPage)
+        if (!searchPage || page === 0) setPage(1)
 
-    }, [filter,page]);
+        let searchTerm = searchParams.get('term') as string;
+
+        if (searchTerm) setTerm(searchTerm);
+        if (!searchTerm) setTerm('')
+
+        let searchFriend = searchParams.get('friend');
+
+        if (!searchFriend) setFriend(null)
+        if (searchFriend === 'true') setFriend(true)
+        if (searchFriend === 'false') setFriend(false)
+
+    }, [searchParams, page, totalPage]);
+
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
+
+    if (error) {
+        return <p>Не удалось загрузить пользователей</p>
+    }
 
     return (
-        <div className={s.users}>
-            <div className={s.infoPage}>
-                <span>Users per page: 100</span>
-                <span>Total pages: {totalPage}</span>
-                <span>Total users: {totalCount}</span>
-            </div>
-            <UpperBlockPagination
-                totalPage={totalPage}
-                setPage={getCurrentPage}
-                page={page}
-                setCount={setCount}
-                users={users}
-                loading={loading}/>
-            <UsersSearchForm
-                setPage={getCurrentPage}
-                requestUsers={reqUsers}
-                page={page}/>
-            <UserCard
-                users={users}
-                count={count}/>
-            <LowerBlockPagination
-                setCurrentPage={getCurrentPage}
-                count={count}
-                totalPage={totalPage}
-                currentPage={page}
-                setCount={setCount}
-                users={users}
-                loading={loading}/>
-        </div>
+        <Grid item sx={{width: '90%'}} container spacing={2} direction="column">
+            <Grid item xs sx={{top: 50, position: 'sticky'}}>
+                <UsersPagination totalPage={totalPage} page={page} isFetching={isFetching}/>
+            </Grid>
+            <Grid item xs>
+                <Paper sx={{backgroundColor: 'rgba(0, 0, 0, 0.1)', p: 2}} elevation={5}>
+                    <Grid container item spacing={2} xs={12}>
+                        <UsersFilterBlock count={count} term={term} friend={friend}/>
+                    </Grid>
+                </Paper>
+            </Grid>
+            <Grid container item xs>
+                <Paper sx={{backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '100%'}} elevation={5}>
+                    {isSuccess && users.items.map((user: UsersType) =>
+                        <Grid item xs={12} key={user.id} sx={{p: 1}} container spacing={2}>
+                            <Grid container item>
+                                <Grid item xs>
+                                    <ButtonBase sx={{width: 90, height: 90}}>
+                                        <NavLink to={`/${user.id}`}>
+                                            <Avatar
+                                            alt="photo"
+                                            src={user.photos.small ?? avatar}
+                                            style={{width: '80px', height: '80px'}}
+                                            variant="rounded"/>
+                                        </NavLink>
+                                    </ButtonBase>
+                                </Grid>
+                                <Grid item xs={10} container direction="column" spacing={2} sx={{width: '100%'}}>
+                                    <Grid item sx={{wordWrap: 'break-word', width: '100%',}}>
+                                        <Typography gutterBottom variant="subtitle1" component="div">
+                                            {user.name}
+                                        </Typography>
+                                        <Typography variant="body2" gutterBottom sx={{minHeight: 0}}>
+                                            {user.status}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item container justifyContent="space-between">
+                                        <Grid>
+                                            <FollowedUser userId={user.id} followed={user.followed}/>
+                                        </Grid>
+                                        <Grid>
+                                            <Button variant="contained" size='small'>send message</Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item xs>
+                                <Divider></Divider>
+                            </Grid>
+                        </Grid>)}
+                </Paper>
+            </Grid>
+        </Grid>
     )
-})
+});

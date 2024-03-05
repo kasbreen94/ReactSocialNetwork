@@ -1,17 +1,15 @@
 import React from "react";
-import {logout} from "../../redux/auth_Reducer";
-import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../../redux/authSlice";
 import s from "./Header.module.css";
-import {Navigate, NavLink} from "react-router-dom";
-import {AppDispatch} from "../../redux/redux_store";
-import {getIsAuth} from "../../redux/selectors/auth_selectors";
+import {Navigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {Navbar} from "./Navbar/Navbar";
 
 export const HeaderContainer = () => {
 
-    const isAuth = useSelector(getIsAuth)
+    const isAuth = useAppSelector(state => state.auth.auth.isAuth)
 
-    const dispatch: AppDispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     if (!isAuth)
         return <Navigate to='/login'/>

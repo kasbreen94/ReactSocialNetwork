@@ -1,0 +1,55 @@
+.navTabs{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.tabActive {
+    color: rgb(61, 136, 220);
+    border-right: solid 2px rgb(61, 136, 220);
+    animation-name: border_right;
+    animation-duration: 0.1s;
+    animation-timing-function: linear;
+    transition: color 0.5s;
+}
+
+.line {
+    height: 80%;
+    border: solid 1px black;
+    display: flex;
+    align-self: end;
+}
+@keyframes border_right {
+    0% {
+        border-right: none;
+    }
+    50% {
+        border-right: solid 1px rgb(61, 136, 220);
+    }
+    100% {
+        border-right: solid 2px rgb(61, 136, 220);
+    }
+}
+.tabNotActive {
+    color: #484646;
+}
+.navTab {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    gap: 5px;
+
+}
+.buttonWrapper {
+
+}
+.button {
+    background-color: rgb(129, 188, 239);
+    box-shadow: 0 0 3px rgb(86, 86, 86);
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+
+}
+.button:active {
+    box-shadow: inset 0 0 2px rgb(86, 86, 86);
+}

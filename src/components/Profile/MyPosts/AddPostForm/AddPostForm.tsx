@@ -1,8 +1,9 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {useForm} from "react-hook-form";
 import s from "./MyPosts.module.css";
 import {useDispatch} from "react-redux";
-import {actions} from "../../../redux/profileReducer";
+import {addPost} from "../../../redux/profileSlice";
+import {Button, TextField} from "@mui/material";
 
 type NewPostFormType = {
     newPostText: string
@@ -20,27 +21,36 @@ export const AddPostForm = () => {
 
     const dispatch = useDispatch()
 
+    let tempDate = new Date();
+    let date = `${tempDate.getFullYear().toString().slice(2)}.${tempDate.getMonth()+1}.${tempDate.getDate()}`;
+    let time = `${tempDate.getHours()}:${tempDate.getMinutes()}:${tempDate.getSeconds()}`
+    let postDate = `${date} ${time}`
+
     const onSubmit = (data: NewPostFormType) => {
-        dispatch(actions.addPost(data.newPostText))
+        dispatch(addPost({message: data.newPostText, postDate}))
         reset();
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={s.addPost}>
+        <form onSubmit={handleSubmit(onSubmit)} >
             <div>
-                  <textarea placeholder="Add your text"
+                  <TextField multiline
+                             maxRows={4}
+                             label="enter your text"
+                             fullWidth
+                             inputProps={{
+                                 maxLength: 300
+                             }}
                             {...register("newPostText", {
                                 minLength: {
                                     value: 5,
                                     message: 'min 5 symbols'
                                 }
                             })}/>
-                <div className={s.addPostButton}>
+                <div >
                     {errors?.newPostText && <p>{errors?.newPostText?.message || "Error!"}</p>}
-                    <button type="submit" disabled={!isValid || !isDirty}>Add post</button>
+                    <Button type="submit" disabled={!isValid || !isDirty} size='small'>Add post</Button>
                 </div>
-            </div>
-            <div>
             </div>
         </form>
     )
